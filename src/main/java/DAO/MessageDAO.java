@@ -1,4 +1,6 @@
 package DAO;
 
-public class MessageDAO {
+import entities.Message;
+
+public class MessageDAO implements DAO<Message> {
 }

@@ -1,4 +1,6 @@
 package DAO;
 
-public class LikeDAO {
+import entities.Like;
+
+public class LikeDAO implements DAO<Like> {
 }
