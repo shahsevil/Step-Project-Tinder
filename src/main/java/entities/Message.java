@@ -19,6 +19,13 @@ public class Message {
     this.dateString = dateString;
   }
 
+  public Message(int fromId, int toId, String content, String dateString) {
+    this.fromUserId = fromId;
+    this.toUserId = toId;
+    this.content = content;
+    this.dateString = dateString;
+  }
+
   public int getFromUserId() {
     return fromUserId;
   }

@@ -22,6 +22,23 @@ public class User {
     this.urlPhoto = urlPhoto;
   }
 
+  public User(int userId, String username, String password, String profession, String lastLogin, String urlPhoto) {
+    this.userId = userId;
+    this.username = username;
+    this.password = password;
+    this.profession = profession;
+    this.lastLogin = lastLogin;
+    this.urlPhoto = urlPhoto;
+  }
+
+  public User(String userName, String password, String profession, String lastLogin, String urlPhoto) {
+    this.username = username;
+    this.password = password;
+    this.profession = profession;
+    this.lastLogin = lastLogin;
+    this.urlPhoto = urlPhoto;
+  }
+
   public int getUserId() {
     return userId;
   }
