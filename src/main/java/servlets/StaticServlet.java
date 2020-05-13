@@ -12,20 +12,20 @@ import java.nio.file.Paths;
 
 public class StaticServlet extends HttpServlet {
 
-    private final String subPath;
+  private final String subPath;
 
-    public StaticServlet(String subPath) {
-        this.subPath = subPath;
-    }
+  public StaticServlet(String subPath) {
+    this.subPath = subPath;
+  }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String filename = req.getPathInfo();
-        String osFileLocation = "resources/content";
-        Path path = Paths.get(osFileLocation, subPath, filename);
-        try (OutputStream os = resp.getOutputStream()) {
-            Files.copy(path, os);
-        }
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    String filename = req.getPathInfo();
+    String osFileLocation = "resources/content";
+    Path path = Paths.get(osFileLocation, subPath, filename);
+    try (OutputStream os = resp.getOutputStream()) {
+      Files.copy(path, os);
     }
+  }
 
 }

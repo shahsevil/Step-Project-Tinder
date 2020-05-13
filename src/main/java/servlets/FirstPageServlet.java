@@ -9,11 +9,11 @@ import java.util.stream.Collectors;
 
 public class FirstPageServlet extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String result = new BufferedReader(new FileReader(new File("content/first-page.html"))).lines().collect(Collectors.joining("\n"));
-        try (PrintWriter w = resp.getWriter()) {
-            w.write(result);
-        }
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    String result = new BufferedReader(new FileReader(new File("content/first-page.html"))).lines().collect(Collectors.joining("\n"));
+    try (PrintWriter w = resp.getWriter()) {
+      w.write(result);
     }
+  }
 }
