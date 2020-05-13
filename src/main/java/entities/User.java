@@ -20,8 +20,8 @@ public class User {
     this.urlPhoto = urlPhoto;
   }
 
-  public User(String userName, String password) {
-    this.username = userName;
+  public User(String username, String password) {
+    this.username = username;
     this.password = password;
   }
 
