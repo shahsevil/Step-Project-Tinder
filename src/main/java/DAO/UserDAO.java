@@ -16,7 +16,6 @@ public class UserDAO implements DAO<User> {
 
     List<User> userList = new ArrayList<>();
 
-
     @Override
     public Optional<User> get(int id) {
         User user = null;
@@ -36,7 +35,7 @@ public class UserDAO implements DAO<User> {
                 user = new User(userName, password, profession, lastLogin, urlPhoto);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Something went wrong..");
         }
         return Optional.ofNullable(user);
     }

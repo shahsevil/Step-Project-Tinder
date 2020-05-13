@@ -34,8 +34,9 @@ public class LikeDAO implements DAO<Like> {
             ResultSet rset = stm.executeQuery();
             if (rset.next()) {
                 int userId = rset.getInt("likerUserId");
-                int liked_uid = rset.getInt("likedUserId");
-                like = new Like(userId, liked_uid);
+                int likedUserId = rset.getInt("likedUserId");
+                boolean action=rset.getBoolean("action");
+                like = new Like(userId, likedUserId,action);
             }
 
         } catch (SQLException e) {
@@ -53,7 +54,8 @@ public class LikeDAO implements DAO<Like> {
             stmt.setInt(1, likerUserId);
             ResultSet rset = stmt.executeQuery();
             while (rset.next()) {
-                Like like = new Like(rset.getInt("likerUserId"), rset.getInt("likedUserId"));
+                Like like = new Like(rset.getInt("likerUserId"), rset.getInt("likedUserId"),
+                        rset.getBoolean("action"));
                 likeList.add(like);
             }
         } catch (SQLException e) {
