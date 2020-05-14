@@ -14,27 +14,27 @@ import java.util.Optional;
 public class LikeDAO implements DAO<Like> {
 
     private List<Like> likeList;
-    private int likerUserId;
+    private int liker_id;
 
     public LikeDAO(List<Like> likeList, int likerUserId) {
         this.likeList = likeList;
-        this.likerUserId = likerUserId;
+        this.liker_id = likerUserId;
     }
 
     @Override
     public Optional<Like> get(int id) {
         Like like = null;
-        String SQL = "SELECT * FROM likes where likerUserId = ? and likedUserId = ?";
+        String SQL = "SELECT * FROM likes where liker_id = ? and liked_id = ?";
         try {
             Connection connection = ConnectionDB.getConnection();
             PreparedStatement stm = connection.prepareStatement(SQL);
-            stm.setInt(1, likerUserId);
+            stm.setInt(1, liker_id);
             stm.setInt(2, id);
             stm.execute();
             ResultSet rset = stm.executeQuery();
             if (rset.next()) {
-                int userId = rset.getInt("likerUserId");
-                int likedUserId = rset.getInt("likedUserId");
+                int userId = rset.getInt("liker_id");
+                int likedUserId = rset.getInt("liked_id");
                 boolean action=rset.getBoolean("action");
                 like = new Like(userId, likedUserId,action);
             }
@@ -47,14 +47,14 @@ public class LikeDAO implements DAO<Like> {
 
     @Override
     public Collection<Like> getAll() {
-        String SQL = "SELECT * FROM likes where likerUserId=?";
+        String SQL = "SELECT * FROM likes where liker_id=?";
         try {
             Connection connection = ConnectionDB.getConnection();
             PreparedStatement stmt = connection.prepareStatement(SQL);
-            stmt.setInt(1, likerUserId);
+            stmt.setInt(1, liker_id);
             ResultSet rset = stmt.executeQuery();
             while (rset.next()) {
-                Like like = new Like(rset.getInt("likerUserId"), rset.getInt("likedUserId"),
+                Like like = new Like(rset.getInt("liker_id"), rset.getInt("liked_id"),
                         rset.getBoolean("action"));
                 likeList.add(like);
             }
@@ -66,12 +66,13 @@ public class LikeDAO implements DAO<Like> {
 
     @Override
     public void insert(Like like) {
-        String SQL = "INSERT INTO likes where likerUserId=? and likedUserId=?";
+        String SQL = "INSERT INTO likes where liker_id=? and liked_id=? and action=?";
         try {
             Connection connection = ConnectionDB.getConnection();
             PreparedStatement stm = connection.prepareStatement(SQL);
-            stm.setInt(1, likerUserId);
+            stm.setInt(1, liker_id);
             stm.setInt(2, like.getLikedUserId());
+            stm.setBoolean(3,like.isAction());
             stm.execute();
         } catch (SQLException e) {
             throw new RuntimeException("Something went wrong");

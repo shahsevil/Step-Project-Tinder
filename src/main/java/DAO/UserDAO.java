@@ -29,9 +29,9 @@ public class UserDAO implements DAO<User> {
             if (resultSet.next()) {
                 String userName = resultSet.getString("username");
                 String password = resultSet.getString("password");
+                String urlPhoto = resultSet.getString("photo_url");
                 String profession = resultSet.getString("profession");
-                String lastLogin = resultSet.getString("lastLogin");
-                String urlPhoto = resultSet.getString("urlPhoto");
+                String lastLogin = resultSet.getString("last_login");
                 user = new User(userName, password, profession, lastLogin, urlPhoto);
             }
         } catch (SQLException e) {
@@ -52,9 +52,9 @@ public class UserDAO implements DAO<User> {
                 int id = resultSet.getInt("id");
                 String userName = resultSet.getString("username");
                 String password = resultSet.getString("password");
+                String urlPhoto = resultSet.getString("photo_url");
                 String profession = resultSet.getString("profession");
-                String lastLogin = resultSet.getString("lastLogin");
-                String urlPhoto = resultSet.getString("urlPhoto");
+                String lastLogin = resultSet.getString("last_login");
                 user = new User(id, userName, password, profession, lastLogin, urlPhoto);
                 userList.add(user);
             }
@@ -67,7 +67,7 @@ public class UserDAO implements DAO<User> {
     @Override
     public void insert(User user) {
         User user1;
-        String SQL = "INSERT INTO users where username=? and password=? and profession=? and lastLogin=? and urlPhoto=?";
+        String SQL = "INSERT INTO users where username=? and password=? and photo_url=? and profession=? and last_login=?";
         try {
             Connection connection = ConnectionDB.getConnection();
             PreparedStatement stmt = connection.prepareStatement(SQL);

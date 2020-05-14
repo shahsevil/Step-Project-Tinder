@@ -13,28 +13,28 @@ import java.util.Optional;
 
 public class MessageDAO implements DAO<Message> {
 
-    private int fromId;
-    private int toId;
+    private int from_id;
+    private int to_id;
     List<Message> messageList;
 
-    public MessageDAO(int fromId, int toId, List<Message> messageList) {
-        this.fromId = fromId;
-        this.toId = toId;
+    public MessageDAO(int from_id, int to_id, List<Message> messageList) {
+        this.from_id = from_id;
+        this.to_id = to_id;
         this.messageList = messageList;
     }
 
     @Override
     public Optional<Message> get(int id) {
         Message message = null;
-        String SQL = "SELECT * FROM messages WHERE message_id = ?";
+        String SQL = "SELECT * FROM messages WHERE id = ?";
         try {
             Connection connection = ConnectionDB.getConnection();
             PreparedStatement stmt = connection.prepareStatement(SQL);
             stmt.setInt(1, id);
             ResultSet resultSet = stmt.executeQuery();
             if (resultSet.next()) {
-                message = new Message(resultSet.getInt("fromId"), resultSet.getInt("toId"),
-                        resultSet.getString("content"), resultSet.getString("dateString"));
+                message = new Message(resultSet.getInt("from_id"), resultSet.getInt("to_id"),
+                        resultSet.getString("content"), resultSet.getString("date"));
             }
         } catch (SQLException e) {
             throw new RuntimeException("Something went wrong");
@@ -44,17 +44,17 @@ public class MessageDAO implements DAO<Message> {
 
     @Override
     public Collection<Message> getAll() {
-        String SQL = "SELECT * FROM messages where fromId = ? and receiver = ?";
+        String SQL = "SELECT * FROM messages where from_id = ? and to_id = ?";
         try {
             Connection connection = ConnectionDB.getConnection();
             PreparedStatement stmt = connection.prepareStatement(SQL);
-            stmt.setInt(1, fromId);
-            stmt.setInt(2, toId);
+            stmt.setInt(1, from_id);
+            stmt.setInt(2, to_id);
             ResultSet resultSet = stmt.executeQuery();
             while (resultSet.next()) {
-                messageList.add(new Message(resultSet.getInt("fromId"),
-                        resultSet.getInt("toId"),
-                        resultSet.getString("content"), resultSet.getString("dateString")));
+                messageList.add(new Message(resultSet.getInt("from_id"),
+                        resultSet.getInt("to_id"),
+                        resultSet.getString("content"), resultSet.getString("date")));
             }
         } catch (SQLException e) {
             throw new RuntimeException("Something went wrong");
@@ -64,7 +64,7 @@ public class MessageDAO implements DAO<Message> {
 
     @Override
     public void insert(Message message) {
-        String SQL = "INSERT  INTO messages where fromId=? and toId=? and content=? and dateString=?";
+        String SQL = "INSERT  INTO messages where from_id=? and to_id=? and content=? and date=?";
         try {
             Connection connection = ConnectionDB.getConnection();
             PreparedStatement stmt = connection.prepareStatement(SQL);
