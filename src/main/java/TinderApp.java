@@ -2,6 +2,7 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import servlets.FirstPageServlet;
+import servlets.LoginServlet;
 import servlets.RegisterServlet;
 import servlets.StaticServlet;
 
@@ -12,8 +13,8 @@ public class TinderApp {
 
     handler.addServlet(new ServletHolder(new FirstPageServlet()), "/*");
     handler.addServlet(new ServletHolder(new RegisterServlet()), "/register");
+    handler.addServlet(new ServletHolder(new LoginServlet()),  "/login");
     handler.addServlet(new ServletHolder(new StaticServlet("css")), "/css/*");
-
 
     server.setHandler(handler);
     server.start();
