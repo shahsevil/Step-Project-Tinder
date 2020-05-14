@@ -21,9 +21,11 @@ public class FirstPageServlet extends HttpServlet {
   }
 
   @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException{
     String next = req.getParameter("action");
+    System.out.println(next);
     String filename = next.equals("login") ? "login.html" : "register.html";
+
     try (OutputStream os = resp.getOutputStream()) {
       Files.copy(Paths.get(CONTENT_DIR, filename), os);
     }
