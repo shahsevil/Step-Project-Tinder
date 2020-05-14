@@ -1,5 +1,7 @@
 package servlets;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +23,7 @@ public class FirstPageServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
     String next = req.getParameter("action");
-    String filename = next.equals("login") ? "login" : "register";
+    String filename = next.equals("login") ? "login.html" : "register.html";
     try (OutputStream os = resp.getOutputStream()) {
       Files.copy(Paths.get(CONTENT_DIR, filename), os);
     }

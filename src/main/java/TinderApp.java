@@ -1,10 +1,7 @@
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import servlets.FirstPageServlet;
-import servlets.LoginServlet;
-import servlets.RegisterServlet;
-import servlets.StaticServlet;
+import servlets.*;
 
 public class TinderApp {
   public static void main(String[] args) throws Exception {
