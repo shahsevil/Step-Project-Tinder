@@ -8,7 +8,7 @@ public class TinderApp {
     Server server = new Server(9000);
     ServletContextHandler handler = new ServletContextHandler();
 
-    handler.addServlet(new ServletHolder(new FirstPageServlet()), "/firstpage");
+    handler.addServlet(new ServletHolder(new FirstPageServlet()), "/*");
 
     server.setHandler(handler);
     server.start();
