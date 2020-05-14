@@ -11,11 +11,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class StaticServlet extends HttpServlet {
+  private final String subPath;
+
+  public StaticServlet(String subPath) {
+    this.subPath = subPath;
+  }
 
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
     String filename = req.getPathInfo();
-    Path path = Paths.get("./src/main/resources/content/",filename);
+    Path path = Paths.get("./src/main/resources/content/", subPath, filename);
 
     try (OutputStream os = resp.getOutputStream()) {
       Files.copy(path, os);
