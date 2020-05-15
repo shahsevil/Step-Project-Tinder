@@ -1,30 +1,26 @@
 package servlets;
 
 import entities.User;
-import services.LogInOutService;
+import services.LoginService;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.stream.Collectors;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class LoginServlet extends HttpServlet {
-    private LogInOutService logInOutService;
 
-    public LoginServlet(LogInOutService logInOutService) {
-        this.logInOutService = logInOutService;
-    }
-
-    public LoginServlet() {
-    }
+    private static final String CONTENT_DIR = "./src/main/resources/content/";
+    private LoginService loginService= new LoginService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String result = new BufferedReader(new FileReader(new File("./src/main/resources/content/login.html"))).lines().collect(Collectors.joining("\n"));
-        try (PrintWriter w = resp.getWriter()) {
-            w.write(result);
+        try (OutputStream os = resp.getOutputStream()) {
+            Files.copy(Paths.get(CONTENT_DIR, "login.html"), os);
         }
     }
 
@@ -33,9 +29,9 @@ public class LoginServlet extends HttpServlet {
         String username= req.getParameter("username");
         String password= req.getParameter("password");
         try {
-            /**
-             *
-             */
+            int id=loginService.isUserLoggedIn(new User(username,password));
+            resp.addCookie(new Cookie("id",String.valueOf(id)));
+            resp.sendRedirect("/liked");
         } catch (Exception e) {
             resp.sendRedirect("/login");
         }
