@@ -31,7 +31,14 @@ public class User {
     this.urlPhoto = urlPhoto;
   }
 
-  public User(String userName, String password, String profession, String lastLogin, String urlPhoto) {
+  public User(String username, String password, String profession, String urlPhoto) {
+    this.username = username;
+    this.password = password;
+    this.profession = profession;
+    this.urlPhoto = urlPhoto;
+  }
+
+  public User(String username, String password, String profession, String lastLogin, String urlPhoto) {
     this.username = username;
     this.password = password;
     this.profession = profession;
