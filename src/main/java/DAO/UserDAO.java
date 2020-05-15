@@ -67,15 +67,14 @@ public class UserDAO implements DAO<User> {
     @Override
     public void insert(User user) {
         User user1;
-        String SQL = "INSERT INTO users where username=? and password=? and photo_url=? and profession=? and last_login=?";
+        String SQL = "INSERT INTO users(username,password,photo_url,profession) VALUES (?,?,?,?)";
         try {
             Connection connection = ConnectionDB.getConnection();
             PreparedStatement stmt = connection.prepareStatement(SQL);
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getPassword());
-            stmt.setString(3, user.getProfession());
-            stmt.setString(4, user.getLastLogin());
-            stmt.setString(5, user.getUrlPhoto());
+            stmt.setString(3, user.getUrlPhoto());
+            stmt.setString(4, user.getProfession());
             stmt.executeQuery();
             user1 = new User(user.getUsername(), user.getPassword(), user.getProfession(), user.getLastLogin()
                     , user.getUrlPhoto());

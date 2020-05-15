@@ -64,7 +64,7 @@ public class MessageDAO implements DAO<Message> {
 
     @Override
     public void insert(Message message) {
-        String SQL = "INSERT  INTO messages where from_id=? and to_id=? and content=? and date=?";
+        String SQL = "INSERT  INTO messages(from_id,to_id,content,date) VALUES (?,?,?,?)";
         try {
             Connection connection = ConnectionDB.getConnection();
             PreparedStatement stmt = connection.prepareStatement(SQL);
