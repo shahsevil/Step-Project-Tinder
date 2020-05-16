@@ -77,12 +77,4 @@ public class MessageDAO implements DAO<Message> {
             throw new RuntimeException("Something went wrong");
         }
     }
-
-    @Override
-    public void delete(Message message) {
-    }
-
-    @Override
-    public void update(Message message) {
-    }
 }
