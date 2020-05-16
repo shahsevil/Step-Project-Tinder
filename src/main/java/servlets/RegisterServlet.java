@@ -31,8 +31,5 @@ public class RegisterServlet extends HttpServlet {
     String photoUrl = req.getParameter("photoUrl");
     User newUser = new User(username, password, profession, photoUrl);
     REGISTER_SERVICE.register(newUser);
-    try (PrintWriter w = resp.getWriter()) {
-      w.write("Registration completed successfully!");
-    }
   }
 }

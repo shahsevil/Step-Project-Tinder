@@ -9,10 +9,12 @@ public class TinderApp {
     ServletContextHandler handler = new ServletContextHandler();
 //    TemplateEngine templateEngine = new TemplateEngine("./src/main/resources/content/ftl/*");
 
+    handler.addServlet(new ServletHolder(new StaticServlet("css")), "/css/*");
+
     handler.addServlet(new ServletHolder(new FirstPageServlet()), "/*");
     handler.addServlet(new ServletHolder(new RegisterServlet()), "/register");
-    handler.addServlet(new ServletHolder(new StaticServlet("css")), "/css/*");
     handler.addServlet(new ServletHolder(new LoginServlet()),"/login");
+    handler.addServlet(new ServletHolder(new LikePageServlet()),"/users");
 
     server.setHandler(handler);
     server.start();
