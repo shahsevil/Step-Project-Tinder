@@ -29,7 +29,7 @@ public class LoginServlet extends HttpServlet {
         String username= req.getParameter("username");
         String password= req.getParameter("password");
         try {
-            int id=loginService.isUserLoggedIn(new User(username,password));
+            int id=loginService.userId(new User(username,password));
             resp.addCookie(new Cookie("id",String.valueOf(id)));
             resp.sendRedirect("/liked");
         } catch (Exception e) {

@@ -1,6 +1,7 @@
 package entities;
 
 import java.text.SimpleDateFormat;
+import java.util.Objects;
 
 public class User {
 
@@ -78,5 +79,24 @@ public class User {
 
   public String getUrlPhoto() {
     return urlPhoto;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    User user = (User) o;
+    return userId == user.userId &&
+            date == user.date &&
+            Objects.equals(username, user.username) &&
+            Objects.equals(password, user.password) &&
+            Objects.equals(profession, user.profession) &&
+            Objects.equals(lastLogin, user.lastLogin) &&
+            Objects.equals(urlPhoto, user.urlPhoto);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(userId, username, password, profession, date, lastLogin, urlPhoto);
   }
 }

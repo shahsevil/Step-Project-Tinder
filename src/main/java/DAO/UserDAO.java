@@ -83,12 +83,4 @@ public class UserDAO implements DAO<User> {
             throw new RuntimeException("Something went wrong..");
         }
     }
-
-    @Override
-    public void update(User user) {
-    }
-
-    @Override
-    public void delete(User user) {
-    }
 }
