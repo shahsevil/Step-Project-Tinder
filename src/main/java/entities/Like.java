@@ -11,6 +11,11 @@ public class Like {
     this.action = action;
   }
 
+  public Like(int likerUserId, int likedUserId) {
+    this.likerUserId = likerUserId;
+    this.likedUserId = likedUserId;
+  }
+
   public int getLikerUserId() {
     return likerUserId;
   }
