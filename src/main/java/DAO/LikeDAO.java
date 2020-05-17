@@ -78,13 +78,4 @@ public class LikeDAO implements DAO<Like> {
             throw new RuntimeException("Something went wrong");
         }
     }
-
-
-    @Override
-    public void update(Like like) {
-    }
-
-    @Override
-    public void delete(Like like) {
-    }
 }
