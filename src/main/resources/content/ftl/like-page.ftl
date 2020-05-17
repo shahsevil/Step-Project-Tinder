@@ -30,13 +30,13 @@
         </div>
         <form method="post">
           <div class="col-12 col-lg-6">
-            <button name="action" value="dislike" type="button" class="btn btn-outline-danger btn-block">
+            <button name="reaction" value="dislike" type="button" class="btn btn-outline-danger btn-block">
               <span class="fa fa-times"></span>
               Dislike
             </button>
           </div>
           <div class="col-12 col-lg-6">
-            <button name="action" value="like" type="button" class="btn btn-outline-success btn-block">
+            <button name="reaction" value="like" type="button" class="btn btn-outline-success btn-block">
               <span class="fa fa-heart"></span>
               Like
             </button>
