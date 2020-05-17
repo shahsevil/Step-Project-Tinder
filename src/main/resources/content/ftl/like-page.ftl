@@ -1,4 +1,4 @@
-<!do ctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -28,20 +28,20 @@
           <h3 class="mb-0 text-truncated">${username}</h3>
           <br>
         </div>
-        <form method="post">
-          <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-6">
+          <form method="post">
             <button name="reaction" value="dislike" type="button" class="btn btn-outline-danger btn-block">
               <span class="fa fa-times"></span>
               Dislike
             </button>
-          </div>
-          <div class="col-12 col-lg-6">
-            <button name="reaction" value="like" type="button" class="btn btn-outline-success btn-block">
-              <span class="fa fa-heart"></span>
-              Like
-            </button>
-          </div>
-        </form>
+        </div>
+        <div class="col-12 col-lg-6">
+          <button name="reaction" value="like" type="button" class="btn btn-outline-success btn-block">
+            <span class="fa fa-heart"></span>
+            Like
+          </button>
+          </form>
+        </div>
         <!--/col-->
       </div>
       <!--/row-->
