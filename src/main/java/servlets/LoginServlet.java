@@ -29,8 +29,9 @@ public class LoginServlet extends HttpServlet {
         String username= req.getParameter("username");
         String password= req.getParameter("password");
         try {
-            int id=loginService.userId(new User(username,password));
-            resp.addCookie(new Cookie("who_id",String.valueOf(id)));
+            User login = loginService.login(username, password);
+            System.out.println(login.getUsername());
+            resp.addCookie(new Cookie("who_id",String.valueOf(login.getUserId())));
             resp.sendRedirect("/users");
         } catch (Exception e) {
             resp.sendRedirect("/login");

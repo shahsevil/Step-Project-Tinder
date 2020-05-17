@@ -16,4 +16,8 @@ public class LoginService {
         throw new RuntimeException("Something went wrong");
     }
 
+    public User login(String username, String password) {
+        return userDAO.getAllByNameAndPass(username, password);
+    }
+
 }

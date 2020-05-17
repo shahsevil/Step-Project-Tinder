@@ -126,4 +126,27 @@ public class UserDAO implements DAO<User> {
         }
         return users;
     }
+
+    public User getAllByNameAndPass(String username, String password) {
+        User user;
+        String SQL = "SELECT * FROM users WHERE username = ? AND password = ?";
+        try {
+            Connection connection = ConnectionDB.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(SQL);
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            ResultSet resultSet = stmt.executeQuery();
+            resultSet.next();
+                int id = resultSet.getInt("id");
+                String userName = resultSet.getString("username");
+                String pass = resultSet.getString("password");
+                String urlPhoto = resultSet.getString("photo_url");
+                String profession = resultSet.getString("profession");
+                String lastLogin = resultSet.getString("last_login");
+                user = new User(id, userName, pass, profession, lastLogin, urlPhoto);
+        } catch (Exception e) {
+            throw new RuntimeException("Something went wrong..");
+        }
+        return user;
+    }
 }
