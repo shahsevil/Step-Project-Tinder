@@ -75,7 +75,7 @@ public class UserDAO implements DAO<User> {
             stmt.setString(2, user.getPassword());
             stmt.setString(3, user.getUrlPhoto());
             stmt.setString(4, user.getProfession());
-            stmt.executeQuery();
+            stmt.executeUpdate();
             user1 = new User(user.getUsername(), user.getPassword(), user.getProfession(), user.getLastLogin()
                     , user.getUrlPhoto());
             userList.add(user1);
