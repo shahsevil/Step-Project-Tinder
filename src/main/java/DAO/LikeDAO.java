@@ -21,10 +21,14 @@ public class LikeDAO implements DAO<Like> {
         this.liker_id = likerUserId;
     }
 
+    public LikeDAO() {
+
+    }
+
     @Override
     public Optional<Like> get(int id) {
         Like like = null;
-        String SQL = "SELECT * FROM likes where liker_id = ? and liked_id = ?";
+        String SQL = "SELECT * FROM likes where who_id = ? and whom_id = ?";
         try {
             Connection connection = ConnectionDB.getConnection();
             PreparedStatement stm = connection.prepareStatement(SQL);
@@ -47,7 +51,7 @@ public class LikeDAO implements DAO<Like> {
 
     @Override
     public Collection<Like> getAll() {
-        String SQL = "SELECT * FROM likes where liker_id=?";
+        String SQL = "SELECT * FROM likes where whom_id=?";
         try {
             Connection connection = ConnectionDB.getConnection();
             PreparedStatement stmt = connection.prepareStatement(SQL);
@@ -66,7 +70,7 @@ public class LikeDAO implements DAO<Like> {
 
     @Override
     public void insert(Like like) {
-        String SQL = "INSERT INTO likes(liker_id,liked_id,action) VALUES (?,?,?)";
+        String SQL = "INSERT INTO likes(who_id,whom_id,action) VALUES (?,?,?)";
         try {
             Connection connection = ConnectionDB.getConnection();
             PreparedStatement stm = connection.prepareStatement(SQL);
