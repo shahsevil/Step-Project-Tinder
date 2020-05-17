@@ -30,7 +30,6 @@ public class LoginServlet extends HttpServlet {
         String password= req.getParameter("password");
         try {
             User login = loginService.login(username, password);
-            System.out.println(login.getUsername());
             resp.addCookie(new Cookie("who_id",String.valueOf(login.getUserId())));
             resp.sendRedirect("/users");
         } catch (Exception e) {
