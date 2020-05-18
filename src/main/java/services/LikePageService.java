@@ -15,7 +15,7 @@ public class LikePageService {
     return USER_DAO.getUsersToShow(id);
   }
 
-  public void addLike(int who_id, int whom_id, boolean action) {
+  public void addReaction(int who_id, int whom_id, boolean action) {
     LIKE_DAO.insert(new Like(who_id, whom_id, action));
   }
 }
