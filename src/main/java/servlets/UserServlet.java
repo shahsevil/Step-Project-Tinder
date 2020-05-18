@@ -34,12 +34,21 @@ public class UserServlet extends HttpServlet {
         int id = 0;
         if (cookies != null) {
             for (Cookie c : cookies) {
-                if (c.getName().equals("id")) {
+                if (c.getName().equals("who_id")) {
                     id = Integer.parseInt(c.getValue());
                 }
             }
         }
-
         return id;
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+       try{
+           int id = getIdFromCookie(req);
+           resp.sendRedirect(String.format("/message/%d",id));
+       } catch (Exception e) {
+           resp.sendRedirect("/users");
+       }
     }
 }
