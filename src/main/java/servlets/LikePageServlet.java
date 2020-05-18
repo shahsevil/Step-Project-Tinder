@@ -74,6 +74,7 @@ public class LikePageServlet extends HttpServlet {
       data.put("photoUrl", user.getUrlPhoto());
 
       Arrays.stream(cookies)
+              .filter(c -> !"who_id".equals(c.getName()))
               .forEach(c -> {
                 c.setMaxAge(0);
                 resp.addCookie(c);
