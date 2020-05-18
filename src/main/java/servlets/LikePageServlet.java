@@ -38,12 +38,6 @@ public class LikePageServlet extends HttpServlet {
     data.put("username", user0.getUsername());
     data.put("photoUrl", user0.getUrlPhoto());
 
-    Arrays.stream(cookies)
-            .forEach(c -> {
-              c.setMaxAge(0);
-              resp.addCookie(c);
-            });
-
     Cookie whom = new Cookie("whom_id", String.valueOf(user0.getUserId()));
 
     resp.addCookie(whom);
@@ -68,19 +62,13 @@ public class LikePageServlet extends HttpServlet {
     if (counter == allUsers.size()) resp.sendRedirect("/liked");
     else {
       User user = allUsers.get(counter++);
+      System.out.println(counter);
 
       HashMap<String, Object> data = new HashMap<>();
       data.put("username", user.getUsername());
       data.put("photoUrl", user.getUrlPhoto());
 
-      Arrays.stream(cookies)
-              .filter(c -> !"who_id".equals(c.getName()))
-              .forEach(c -> {
-                c.setMaxAge(0);
-                resp.addCookie(c);
-              });
-
-      Cookie whom = new Cookie("whom_id", String.valueOf(user.getUserId()));
+      Cookie whom = new Cookie("whom_test_id", String.valueOf(user.getUserId()));
 
       resp.addCookie(whom);
       templateEngine.render("like-page.ftl", data, resp);

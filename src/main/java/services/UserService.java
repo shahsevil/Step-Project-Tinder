@@ -5,19 +5,19 @@ import DAO.UserDAO;
 import entities.Like;
 import entities.User;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserService {
 
-    LikeDAO likeDAO;
+    LikeDAO likeDAO = new LikeDAO();
     private UserDAO userDAO= new UserDAO();
 
     public List<User> listOfLikedUsers(int id) {
-        List<Like> likes = likeDAO.getAll().stream().filter(like -> like.getLikerUserId()==id)
-                .collect(Collectors.toList());
+        List<Like> allById = likeDAO.getAllById(id);
         return userDAO.getAll().stream()
-                .filter(user -> likes.contains(new Like(id, user.getUserId(),true)))
+                .filter(user -> allById.contains(new Like(id, user.getUserId(),true)))
                 .collect(Collectors.toList());
     }
 }

@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -51,14 +52,13 @@ public class LikeDAO implements DAO<Like> {
 
     @Override
     public Collection<Like> getAll() {
-        String SQL = "SELECT * FROM likes where whom_id=?";
+        String SQL = "SELECT * FROM likes";
         try {
             Connection connection = ConnectionDB.getConnection();
             PreparedStatement stmt = connection.prepareStatement(SQL);
-            stmt.setInt(1, liker_id);
             ResultSet rset = stmt.executeQuery();
             while (rset.next()) {
-                Like like = new Like(rset.getInt("liker_id"), rset.getInt("liked_id"),
+                Like like = new Like(rset.getInt("who_id"), rset.getInt("whom_id"),
                         rset.getBoolean("action"));
                 likeList.add(like);
             }
@@ -74,12 +74,31 @@ public class LikeDAO implements DAO<Like> {
         try {
             Connection connection = ConnectionDB.getConnection();
             PreparedStatement stm = connection.prepareStatement(SQL);
-            stm.setInt(1, liker_id);
+            stm.setInt(1, like.getLikerUserId());
             stm.setInt(2, like.getLikedUserId());
             stm.setBoolean(3,like.isAction());
-            stm.execute();
+            stm.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Something went wrong");
         }
     }
+
+    public List<Like> getAllById(int who_id) {
+        String SQL = "SELECT * FROM likes where who_id = ?";
+        ArrayList<Like> allLikes = new ArrayList<>();
+        try {
+            Connection connection = ConnectionDB.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(SQL);
+            stmt.setInt(1, who_id);
+            ResultSet rset = stmt.executeQuery();
+            while (rset.next()) {
+                allLikes.add(new Like(rset.getInt("who_id"), rset.getInt("whom_id"),
+                        rset.getBoolean("action")));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Something went wrong");
+        }
+        return allLikes;
+    }
+
 }

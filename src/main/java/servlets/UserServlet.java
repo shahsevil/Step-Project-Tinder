@@ -22,8 +22,8 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int id = getIdFromCookie(req);
-        List<User> list = userService.listOfLikedUsers(id);
+        int who_id = getIdFromCookie(req);
+        List<User> list = userService.listOfLikedUsers(who_id);
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("listOfLikedUsers", list);
         templateEngine.render("people-list.ftl", hashMap, resp);
