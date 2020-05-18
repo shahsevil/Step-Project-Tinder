@@ -66,22 +66,23 @@ public class LikePageServlet extends HttpServlet {
     LIKE_PAGE_SERVICE.addReaction(who_id, whom_id, reaction);
 
     if (counter == allUsers.size()) resp.sendRedirect("/liked");
+    else {
+      User user = allUsers.get(counter++);
 
-    User user = allUsers.get(counter++);
+      HashMap<String, Object> data = new HashMap<>();
+      data.put("username", user.getUsername());
+      data.put("photoUrl", user.getUrlPhoto());
 
-    HashMap<String, Object> data = new HashMap<>();
-    data.put("username", user.getUsername());
-    data.put("photoUrl", user.getUrlPhoto());
+      Arrays.stream(cookies)
+              .forEach(c -> {
+                c.setMaxAge(0);
+                resp.addCookie(c);
+              });
 
-    Arrays.stream(cookies)
-            .forEach(c -> {
-              c.setMaxAge(0);
-              resp.addCookie(c);
-            });
+      Cookie whom = new Cookie("whom_id", String.valueOf(user.getUserId()));
 
-    Cookie whom = new Cookie("whom_id", String.valueOf(user.getUserId()));
-
-    resp.addCookie(whom);
-    templateEngine.render("like-page.ftl", data, resp);
+      resp.addCookie(whom);
+      templateEngine.render("like-page.ftl", data, resp);
+    }
   }
 }
