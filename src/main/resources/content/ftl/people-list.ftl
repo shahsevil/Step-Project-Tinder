@@ -31,36 +31,28 @@
               <tbody>
               <tr>
                   <#list listOfLikedUsers as users>
-
                 <td width="10">
                   <div class="avatar-img">
                     <img class="img-circle" style="width:100px;height:100px;" src="${users.urlPhoto}"/>
                   </div>
-
                 </td>
-
                 <td class="align-middle">
                   <!--  Herbert Hoover               -->
                     ${users.userId}
                 </td>
-
                 <td class="align-middle">
                   <!--Builder Sales Agent-->
                     ${users.profession}
                 </td>
-
                 <td class="align-middle">
                   You liked this user
                 </td>
-
                 <td class="align-middle">
                   <!--     Last Login: 6/10/2017<br><small class="text-muted">5 days ago</small> -->
                   <form method="post">
                     <button type="submit">Send message</button>
                   </form>
                 </td>
-
-
               </tr>
               </#list>
               </tbody>
