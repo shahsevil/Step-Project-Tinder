@@ -27,12 +27,13 @@ public class UserDAO implements DAO<User> {
             stm.execute();
             ResultSet resultSet = stm.executeQuery();
             if (resultSet.next()) {
+                int who_id = resultSet.getInt("id");
                 String userName = resultSet.getString("username");
                 String password = resultSet.getString("password");
                 String urlPhoto = resultSet.getString("photo_url");
                 String profession = resultSet.getString("profession");
                 String lastLogin = resultSet.getString("last_login");
-                user = new User(userName, password, profession, lastLogin, urlPhoto);
+                user = new User(who_id, userName, password, profession, lastLogin, urlPhoto);
             }
         } catch (SQLException e) {
             throw new RuntimeException("Something went wrong..");

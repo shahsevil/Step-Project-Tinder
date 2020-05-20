@@ -22,4 +22,11 @@ public class UserService {
                 .filter(user -> allById.contains(new Like(id, user.getUserId(),true)))
                 .collect(Collectors.toList());
     }
+
+    public List<User> getLikedUsers(int who_id) {
+        return likeDAO.getAllById(who_id).stream()
+                .map(Like::getLikedUserId)
+                .map(id -> userDAO.get(id).orElseThrow(RuntimeException::new))
+                .collect(Collectors.toList());
+    }
 }

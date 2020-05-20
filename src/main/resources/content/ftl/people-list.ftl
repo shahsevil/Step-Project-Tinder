@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
         integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
   <!-- Bootstrap core CSS -->
- <!-- <link href="../css/bootstrap.min.css" rel="stylesheet"> -->
+  <!-- <link href="../css/bootstrap.min.css" rel="stylesheet"> -->
   <link href="/content/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom styles for this template -->
   <link rel="stylesheet" href="/content/css/style.css">
@@ -30,7 +30,7 @@
             <table class="table-users table" border="0">
               <tbody>
               <tr>
-                <#list listOfLikedUsers as users>
+                  <#list listOfLikedUsers as users>
 
                 <td width="10">
                   <div class="avatar-img">
@@ -40,13 +40,13 @@
                 </td>
 
                 <td class="align-middle">
-                <!--  Herbert Hoover               -->
-                  ${users.userId}
+                  <!--  Herbert Hoover               -->
+                    ${users.userId}
                 </td>
 
                 <td class="align-middle">
                   <!--Builder Sales Agent-->
-                 ${users.profession}
+                    ${users.profession}
                 </td>
 
                 <td class="align-middle">
@@ -54,8 +54,8 @@
                 </td>
 
                 <td class="align-middle">
-             <!--     Last Login: 6/10/2017<br><small class="text-muted">5 days ago</small> -->
-                  <form method="get" action="/message/${users.userId}" >
+                  <!--     Last Login: 6/10/2017<br><small class="text-muted">5 days ago</small> -->
+                  <form method="post">
                     <button type="submit">Send message</button>
                   </form>
                 </td>

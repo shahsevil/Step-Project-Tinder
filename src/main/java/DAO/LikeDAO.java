@@ -85,11 +85,11 @@ public class LikeDAO implements DAO<Like> {
     }
 
     public List<Like> getAllById(int who_id) {
-        String SQL = "SELECT * FROM likes where who_id = ?";
-        ArrayList<Like> allLikes = new ArrayList<>();
+        String SQL = "SELECT * FROM likes where who_id = ?;";
+        List<Like> allLikes = new ArrayList<>();
         try {
-            Connection connection = ConnectionDB.getConnection();
-            PreparedStatement stmt = connection.prepareStatement(SQL);
+            Connection conn = ConnectionDB.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(SQL);
             stmt.setInt(1, who_id);
             ResultSet rset = stmt.executeQuery();
             while (rset.next()) {
@@ -104,7 +104,7 @@ public class LikeDAO implements DAO<Like> {
     }
 
     public ArrayList<User> getAllByIdJoinUser(int who_id) {
-      String SQL = "SELECT * FROM users u LEFT JOIN likes l on u.id == ? AND u.id == l.who_id";
+      String SQL = "SELECT * FROM likes l RIGHT JOIN users u on u.id == ? AND u.id == l.who_id";
         ArrayList<User> allUsers = new ArrayList<>();
         try {
             Connection conn = ConnectionDB.getConnection();
