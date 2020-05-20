@@ -62,13 +62,12 @@ public class LikePageServlet extends HttpServlet {
     if (counter == allUsers.size()) resp.sendRedirect("/liked");
     else {
       User user = allUsers.get(counter++);
-      System.out.println(counter);
 
       HashMap<String, Object> data = new HashMap<>();
       data.put("username", user.getUsername());
       data.put("photoUrl", user.getUrlPhoto());
 
-      Cookie whom = new Cookie("whom_test_id", String.valueOf(user.getUserId()));
+      Cookie whom = new Cookie("whom_id", String.valueOf(user.getUserId()));
 
       resp.addCookie(whom);
       templateEngine.render("like-page.ftl", data, resp);
