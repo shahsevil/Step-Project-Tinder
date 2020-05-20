@@ -39,37 +39,48 @@ public class LikePageServlet extends HttpServlet {
     data.put("photoUrl", user0.getUrlPhoto());
 
     Cookie whom = new Cookie("whom_id", String.valueOf(user0.getUserId()));
+    Cookie index = new Cookie("index", "0");
 
     resp.addCookie(whom);
+    resp.addCookie(index);
     templateEngine.render("like-page.ftl", data, resp);
   }
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-    String reqParam = req.getParameter("reaction");
-    boolean reaction = "like".equals(reqParam);
+    boolean reaction = "like".equals(req.getParameter("reaction"));
     Cookie[] cookies = req.getCookies();
-    int who_id = 0;
-    int whom_id = 0;
+    Cookie whoCookie = null;
+    Cookie whomCookie = null;
+    Cookie index = null;
 
     for (Cookie c : cookies) {
-      if ("who_id".equals(c.getName())) who_id = Integer.parseInt(c.getValue());
-      else if ("whom_id".equals(c.getName())) whom_id = Integer.parseInt(c.getValue());
+      if ("who_id".equals(c.getName())) whoCookie = c;
+      else if ("whom_id".equals(c.getName())) whomCookie = c;
+      else if ("index".equals(c.getName())) index = c;
     }
+
+    int who_id = Integer.parseInt(whoCookie.getValue());
+    int whom_id = Integer.parseInt(whomCookie.getValue());
+    int idx = Integer.parseInt(index.getValue());
 
     LIKE_PAGE_SERVICE.addReaction(who_id, whom_id, reaction);
 
-    if (counter == allUsers.size()) resp.sendRedirect("/liked");
+    if (idx == allUsers.size()-1) resp.sendRedirect("/liked");
     else {
-      User user = allUsers.get(counter++);
+      idx += 1;
+      User next_user = allUsers.get(idx);
+      System.out.println("id:" + next_user.getUserId());
 
       HashMap<String, Object> data = new HashMap<>();
-      data.put("username", user.getUsername());
-      data.put("photoUrl", user.getUrlPhoto());
+      data.put("username", next_user.getUsername());
+      data.put("photoUrl", next_user.getUrlPhoto());
 
-      Cookie whom = new Cookie("whom_id", String.valueOf(user.getUserId()));
+      whomCookie.setValue(String.valueOf(next_user.getUserId()));
+      index.setValue(String.valueOf(idx));
 
-      resp.addCookie(whom);
+      resp.addCookie(whomCookie);
+      resp.addCookie(index);
       templateEngine.render("like-page.ftl", data, resp);
     }
   }

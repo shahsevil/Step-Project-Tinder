@@ -114,12 +114,13 @@ public class UserDAO implements DAO<User> {
             stmt.setInt(1, id);
             ResultSet resultSet = stmt.executeQuery();
             while (resultSet.next()) {
+                int userId = resultSet.getInt("id");
                 String userName = resultSet.getString("username");
                 String password = resultSet.getString("password");
                 String urlPhoto = resultSet.getString("photo_url");
                 String profession = resultSet.getString("profession");
                 String lastLogin = resultSet.getString("last_login");
-                users.add(new User(id, userName, password, profession, lastLogin, urlPhoto));
+                users.add(new User(userId, userName, password, profession, lastLogin, urlPhoto));
             }
         } catch (SQLException exception) {
             exception.printStackTrace();
