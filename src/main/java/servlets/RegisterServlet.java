@@ -1,6 +1,7 @@
 package servlets;
 
 import entities.User;
+import filter.RegisterFilter;
 import services.RegisterService;
 
 import javax.servlet.ServletException;
@@ -13,24 +14,36 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class RegisterServlet extends HttpServlet {
-  private static final String CONTENT_DIR = "./src/main/resources/content/";
-  private static final RegisterService REGISTER_SERVICE = new RegisterService();
+    private static final String CONTENT_DIR = "./src/main/resources/content/";
+    private static final RegisterService REGISTER_SERVICE = new RegisterService();
 
-  @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-    try (OutputStream os = resp.getOutputStream()) {
-      Files.copy(Paths.get(CONTENT_DIR, "register.html"), os);
+    private RegisterFilter rf = new RegisterFilter();
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        try (OutputStream os = resp.getOutputStream()) {
+            Files.copy(Paths.get(CONTENT_DIR, "register.html"), os);
+        }
     }
-  }
 
-  @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    String username = req.getParameter("username");
-    String password = req.getParameter("password");
-    String profession = req.getParameter("profession");
-    String photoUrl = req.getParameter("photoUrl");
-    User newUser = new User(username, password, profession, photoUrl);
-    REGISTER_SERVICE.register(newUser);
-    resp.sendRedirect("/login");
-  }
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//    String username = req.getParameter("username");
+//    String password = req.getParameter("password");
+//    String profession = req.getParameter("profession");
+//    String photoUrl = req.getParameter("photoUrl");
+//    User newUser = new User(username, password, profession, photoUrl);
+//    REGISTER_SERVICE.register(newUser);
+//    resp.sendRedirect("/login");
+
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+        String profession = req.getParameter("profession");
+        String photoUrl = req.getParameter("photoUrl");
+        if (!rf.isUniqueUsername(username)) {
+            User newUser = new User(username, password, profession, photoUrl);
+            REGISTER_SERVICE.register(newUser);
+            resp.sendRedirect("/login");
+        } else resp.sendRedirect("/register");
+    }
 }
