@@ -32,18 +32,20 @@ public class LikePageServlet extends HttpServlet {
 
     allUsers = LIKE_PAGE_SERVICE.getUsersToShow(Integer.parseInt(cookie.getValue()));
 
-    User user0 = allUsers.get(0);
+    if (allUsers.get(0) != null) {
+      User user0 = allUsers.get(0);
 
-    HashMap<String, Object> data = new HashMap<>();
-    data.put("username", user0.getUsername());
-    data.put("photoUrl", user0.getUrlPhoto());
+      HashMap<String, Object> data = new HashMap<>();
+      data.put("username", user0.getUsername());
+      data.put("photoUrl", user0.getUrlPhoto());
 
-    Cookie whom = new Cookie("whom_id", String.valueOf(user0.getUserId()));
-    Cookie index = new Cookie("index", "0");
+      Cookie whom = new Cookie("whom_id", String.valueOf(user0.getUserId()));
+      Cookie index = new Cookie("index", "0");
 
-    resp.addCookie(whom);
-    resp.addCookie(index);
-    templateEngine.render("like-page.ftl", data, resp);
+      resp.addCookie(whom);
+      resp.addCookie(index);
+      templateEngine.render("like-page.ftl", data, resp);
+    }
   }
 
   @Override
