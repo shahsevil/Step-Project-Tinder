@@ -2,6 +2,7 @@ package DAO;
 
 import connection.ConnectionDB;
 import entities.Like;
+import entities.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -92,7 +93,8 @@ public class LikeDAO implements DAO<Like> {
             stmt.setInt(1, who_id);
             ResultSet rset = stmt.executeQuery();
             while (rset.next()) {
-                allLikes.add(new Like(rset.getInt("who_id"), rset.getInt("whom_id"),
+                allLikes.add(new Like(rset.getInt("who_id"),
+                        rset.getInt("whom_id"),
                         rset.getBoolean("action")));
             }
         } catch (SQLException e) {
@@ -101,4 +103,26 @@ public class LikeDAO implements DAO<Like> {
         return allLikes;
     }
 
+    public ArrayList<User> getAllByIdJoinUser(int who_id) {
+      String SQL = "SELECT * FROM users u LEFT JOIN likes l on u.id == ? AND u.id == l.who_id";
+        ArrayList<User> allUsers = new ArrayList<>();
+        try {
+            Connection conn = ConnectionDB.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(SQL);
+            stmt.setInt(1, who_id);
+            ResultSet resultSet = stmt.executeQuery();
+            while (resultSet.next()) {
+                int userId = resultSet.getInt("id");
+                String userName = resultSet.getString("username");
+                String password = resultSet.getString("password");
+                String urlPhoto = resultSet.getString("photo_url");
+                String profession = resultSet.getString("profession");
+                String lastLogin = resultSet.getString("last_login");
+                allUsers.add(new User(userId, userName, password, profession, lastLogin, urlPhoto));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Something went wrong");
+        }
+        return allUsers;
+    }
 }

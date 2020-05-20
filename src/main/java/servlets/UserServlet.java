@@ -23,9 +23,9 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int who_id = getIdFromCookie(req);
-        List<User> list = userService.listOfLikedUsers(who_id);
+//        List<User> list = userService.listLikedUsers(who_id);
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("listOfLikedUsers", list);
+//        hashMap.put("listOfLikedUsers", list);
         templateEngine.render("people-list.ftl", hashMap, resp);
     }
 
@@ -34,7 +34,7 @@ public class UserServlet extends HttpServlet {
         int id = 0;
         if (cookies != null) {
             for (Cookie c : cookies) {
-                if (c.getName().equals("who_id")) {
+                if ("who_id".equals(c.getName())) {
                     id = Integer.parseInt(c.getValue());
                 }
             }
@@ -43,7 +43,7 @@ public class UserServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
        try{
            int id = getIdFromCookie(req);
            resp.sendRedirect(String.format("/message/%d",id));

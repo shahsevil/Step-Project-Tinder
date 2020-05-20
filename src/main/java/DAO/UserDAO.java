@@ -84,27 +84,6 @@ public class UserDAO implements DAO<User> {
         }
     }
 
-    public List<User> getAllExceptId(int id) {
-        try {
-            String SQL = "SELECT * FROM users where id != ?";
-            Connection conn = ConnectionDB.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(SQL);
-            stmt.setInt(1, id);
-            ResultSet resultSet = stmt.executeQuery();
-            while (resultSet.next()) {
-                String userName = resultSet.getString("username");
-                String password = resultSet.getString("password");
-                String urlPhoto = resultSet.getString("photo_url");
-                String profession = resultSet.getString("profession");
-                String lastLogin = resultSet.getString("last_login");
-                userList.add(new User(id, userName, password, profession, lastLogin, urlPhoto));
-            }
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-        }
-        return userList;
-    }
-
     public List<User> getUsersToShow(int id) {
       List<User> users = new ArrayList<>();
         try {
