@@ -125,4 +125,41 @@ public class LikeDAO implements DAO<Like> {
         }
         return allUsers;
     }
+
+
+    /**
+     * added for filtering
+     *
+     */
+        public void update(Like like){
+        String SQL = "UPDATE likes SET action=? where who_id=? and whom_id=?";
+        try {
+            Connection conn = ConnectionDB.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(SQL);
+            stmt.setBoolean(1, like.isAction());
+            stmt.setInt(2, like.getLikerUserId());
+            stmt.setInt(3,like.getLikedUserId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Something went wrong");
+        }
+    }
+
+    public Optional<Like> optionalLike(Like like){
+        Like like1 = null;
+        String SQL = "SELECT * FROM likes";
+        try {
+            Connection connection = ConnectionDB.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(SQL);
+            ResultSet rset = stmt.executeQuery();
+            while (rset.next()) {
+                like1 = new Like(rset.getInt("who_id"), rset.getInt("whom_id"),
+                        rset.getBoolean("action"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Something went wrong");
+        }
+        return Optional.ofNullable(like1);
+
+    }
 }
