@@ -34,7 +34,7 @@
 
                 <td width="10">
                   <div class="avatar-img">
-                    <img class="img-circle src="${users.urlPhoto}"/>
+                    <img class="img-circle" style="width:100px;height:100px;" src="${users.urlPhoto}"/>
                   </div>
 
                 </td>
@@ -59,6 +59,7 @@
                     <button type="submit">Send message</button>
                   </form>
                 </td>
+
 
               </tr>
               </#list>
