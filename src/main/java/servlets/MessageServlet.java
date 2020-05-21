@@ -36,7 +36,7 @@ public class MessageServlet extends HttpServlet {
     int who_id = Integer.parseInt(whoCookie.getValue());
     int whom_id = Integer.parseInt(whomCookie.getValue());
 
-    List<Message> messages = MESSAGE_SERVICE.getMessages(who_id, whom_id, 10);
+    List<Message> messages = MESSAGE_SERVICE.getMessages(who_id, whom_id);
     User sender = MESSAGE_SERVICE.getUserInfo(who_id);
     User receiver = MESSAGE_SERVICE.getUserInfo(whom_id);
 
