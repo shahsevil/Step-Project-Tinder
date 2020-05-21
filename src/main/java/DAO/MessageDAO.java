@@ -68,7 +68,7 @@ public class MessageDAO implements DAO<Message> {
 
     @Override
     public void insert(Message message) {
-        String SQL = "INSERT  INTO messages(from_id,to_id,content,date) VALUES (?,?,?,?)";
+        String SQL = "INSERT INTO messages (from_id,to_id,content,date) VALUES (?,?,?,?)";
         try {
             Connection connection = ConnectionDB.getConnection();
             PreparedStatement stmt = connection.prepareStatement(SQL);
@@ -76,7 +76,7 @@ public class MessageDAO implements DAO<Message> {
             stmt.setInt(2, message.getToUserId());
             stmt.setString(3, message.getContent());
             stmt.setString(4, message.getDateString());
-            stmt.execute();
+            stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Something went wrong");
         }
