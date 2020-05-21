@@ -11,10 +11,10 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
         integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
   <!-- Bootstrap core CSS -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
@@ -49,22 +49,25 @@
         <div class="col-md-12 chats pt-3 pl-2 pr-3 pb-3">
           <ul class="p-0">
               <#list messages as message>
-                <li class="send-msg float-right mb-2">
-                  <p class="pt-1 pb-1 pl-2 pr-2 m-0 rounded">
-                      ${message.content}
-                  </p>
-                </li>
-                <li class="receive-msg float-left mb-2">
-                  <div class="sender-img">
-                    <img src="${sender_photo_url}" class="float-left">
-                  </div>
-                  <div class="receive-msg-desc float-left ml-2">
-                    <p class="bg-white m-0 pt-1 pb-1 pl-2 pr-2 rounded">
-                        ${message.content}
-                    </p>
-                    <span class="receive-msg-time">${message.dateString}</span>
-                  </div>
-                </li>
+                  <#if message.toUserId == receiver_id>
+                    <li class="send-msg float-right mb-2">
+                      <p class="pt-1 pb-1 pl-2 pr-2 m-0 rounded">
+                          ${message.content}
+                      </p>
+                    </li>
+                  <#else>
+                    <li class="receive-msg float-left mb-2">
+                      <div class="sender-img">
+                        <img src="${sender_photo_url}" class="float-left">
+                      </div>
+                      <div class="receive-msg-desc float-left ml-2">
+                        <p class="bg-white m-0 pt-1 pb-1 pl-2 pr-2 rounded">
+                            ${message.content}
+                        </p>
+                        <span class="receive-msg-time">${message.dateString}</span>
+                      </div>
+                    </li>
+                  </#if>
               </#list>
           </ul>
         </div>

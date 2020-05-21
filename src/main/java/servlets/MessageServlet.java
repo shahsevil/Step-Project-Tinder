@@ -44,6 +44,7 @@ public class MessageServlet extends HttpServlet {
     data.put("receiver_name", receiver.getUsername());
     data.put("sender_photo_url", sender.getUrlPhoto());
     data.put("messages", messages);
+    data.put("receiver_id", receiver.getUserId());
 
 
 //    for (int i = 0; i < messages.size(); i++) {
