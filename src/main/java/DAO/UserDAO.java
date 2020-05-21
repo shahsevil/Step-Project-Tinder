@@ -34,6 +34,7 @@ public class UserDAO implements DAO<User> {
         String lastLogin = resultSet.getString("last_login");
         user = new User(who_id, userName, password, profession, lastLogin, urlPhoto);
       }
+      connection.close();
     } catch (SQLException e) {
       throw new RuntimeException("Something went wrong..");
     }
@@ -58,6 +59,7 @@ public class UserDAO implements DAO<User> {
         user = new User(id, userName, password, profession, lastLogin, urlPhoto);
         userList.add(user);
       }
+      connection.close();
     } catch (Exception e) {
       throw new RuntimeException("Something went wrong..");
     }
@@ -79,6 +81,7 @@ public class UserDAO implements DAO<User> {
       user1 = new User(user.getUsername(), user.getPassword(), user.getProfession(), user.getLastLogin()
               , user.getUrlPhoto());
       userList.add(user1);
+      connection.close();
     } catch (Exception e) {
       throw new RuntimeException("Something went wrong..");
     }
@@ -101,6 +104,7 @@ public class UserDAO implements DAO<User> {
         String lastLogin = resultSet.getString("last_login");
         users.add(new User(userId, userName, password, profession, lastLogin, urlPhoto));
       }
+      conn.close();
     } catch (SQLException exception) {
       exception.printStackTrace();
     }
@@ -124,6 +128,7 @@ public class UserDAO implements DAO<User> {
       String profession = resultSet.getString("profession");
       String lastLogin = resultSet.getString("last_login");
       user = new User(id, userName, pass, profession, lastLogin, urlPhoto);
+      connection.close();
     } catch (Exception e) {
       throw new RuntimeException("Something went wrong..");
     }
@@ -148,6 +153,7 @@ public class UserDAO implements DAO<User> {
       String profession = resultSet.getString("profession");
       String lastLogin = resultSet.getString("last_login");
       user = new User(id, userName, pass, profession, lastLogin, urlPhoto);
+      connection.close();
     } catch (Exception e) {
       throw new RuntimeException("Something went wrong..");
     }

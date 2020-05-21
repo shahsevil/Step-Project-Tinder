@@ -38,6 +38,7 @@ public class MessageDAO implements DAO<Message> {
                 message = new Message(resultSet.getInt("from_id"), resultSet.getInt("to_id"),
                         resultSet.getString("content"), resultSet.getString("date"));
             }
+            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException("Something went wrong");
         }
@@ -57,6 +58,7 @@ public class MessageDAO implements DAO<Message> {
                 messageList.add(new Message(resultSet.getInt("from_id"),
                         resultSet.getInt("to_id"),
                         resultSet.getString("content"), resultSet.getString("date")));
+                connection.close();
             }
         } catch (SQLException e) {
             throw new RuntimeException("Something went wrong");
@@ -74,6 +76,7 @@ public class MessageDAO implements DAO<Message> {
             stmt.setInt(2, message.getToUserId());
             stmt.setString(3, message.getContent());
             stmt.executeUpdate();
+            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException("Something went wrong");
         }
@@ -96,6 +99,7 @@ public class MessageDAO implements DAO<Message> {
                         resultSet.getInt("to_id"),
                         resultSet.getString("content"), resultSet.getString("date")));
             }
+            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException("Something went wrong");
         }
