@@ -3,10 +3,8 @@ package DAO;
 import connection.ConnectionDB;
 import entities.Message;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -68,14 +66,13 @@ public class MessageDAO implements DAO<Message> {
 
     @Override
     public void insert(Message message) {
-        String SQL = "INSERT INTO messages (from_id,to_id,content,date) VALUES (?,?,?,?)";
+        String SQL = "INSERT INTO messages (from_id,to_id,content) VALUES (?,?,?)";
         try {
             Connection connection = ConnectionDB.getConnection();
             PreparedStatement stmt = connection.prepareStatement(SQL);
             stmt.setInt(1, message.getFromUserId());
             stmt.setInt(2, message.getToUserId());
             stmt.setString(3, message.getContent());
-            stmt.setString(4, message.getDateString());
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Something went wrong");
