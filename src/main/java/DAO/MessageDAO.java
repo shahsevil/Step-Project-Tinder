@@ -83,7 +83,7 @@ public class MessageDAO implements DAO<Message> {
     }
 
     public List<Message> getMessages(int from, int to, int limit) {
-        String SQL = "SELECT * FROM messages where from_id = ? and to_id = ? OR from_id = ? and to_id = ? ORDER BY date LIMIT ?";
+        String SQL = "SELECT * FROM messages where from_id = ? and to_id = ? OR from_id = ? and to_id = ? ORDER BY date DESC LIMIT ?";
         List<Message> messages = new ArrayList<>();
         try {
             Connection connection = ConnectionDB.getConnection();
