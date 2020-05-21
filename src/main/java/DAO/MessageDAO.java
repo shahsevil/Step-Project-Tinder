@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +17,9 @@ public class MessageDAO implements DAO<Message> {
     private int from_id;
     private int to_id;
     List<Message> messageList;
+
+    public MessageDAO() {
+    }
 
     public MessageDAO(int from_id, int to_id, List<Message> messageList) {
         this.from_id = from_id;
@@ -77,4 +81,28 @@ public class MessageDAO implements DAO<Message> {
             throw new RuntimeException("Something went wrong");
         }
     }
+
+    public List<Message> getMessages(int from, int to, int limit) {
+        String SQL = "SELECT * FROM messages where from_id = ? and to_id = ? OR from_id = ? and to_id = ? ORDER BY date LIMIT ?";
+        List<Message> messages = new ArrayList<>();
+        try {
+            Connection connection = ConnectionDB.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(SQL);
+            stmt.setInt(1, from);
+            stmt.setInt(2, to);
+            stmt.setInt(3, to);
+            stmt.setInt(4, from);
+            stmt.setInt(5, limit);
+            ResultSet resultSet = stmt.executeQuery();
+            while (resultSet.next()) {
+                messages.add(new Message(resultSet.getInt("from_id"),
+                        resultSet.getInt("to_id"),
+                        resultSet.getString("content"), resultSet.getString("date")));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Something went wrong");
+        }
+        return messages;
+    }
+
 }

@@ -13,8 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class UserServlet extends HttpServlet {
-    TemplateEngine templateEngine;
     UserService userService = new UserService();
+    TemplateEngine templateEngine;
 
     public UserServlet(TemplateEngine templateEngine) {
         this.templateEngine = templateEngine;
