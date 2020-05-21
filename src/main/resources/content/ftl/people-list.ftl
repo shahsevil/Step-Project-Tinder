@@ -57,6 +57,9 @@
               </#list>
               </tbody>
             </table>
+            <a href="/logout">
+              <button type="button" style="width: 20%; height: 20%;">Logout</button>
+            </a>
           </div>
         </div>
       </div>
