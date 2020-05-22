@@ -5,7 +5,7 @@ import servlets.*;
 
 public class TinderApp {
   public static void main(String[] args) throws Exception {
-    Server server = new Server(9000);
+    Server server = new Server(8080);
     ServletContextHandler handler = new ServletContextHandler();
     TemplateEngine templateEngine = new TemplateEngine("./src/main/resources/content/ftl/");
 
