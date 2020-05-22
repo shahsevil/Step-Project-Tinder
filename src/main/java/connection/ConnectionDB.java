@@ -6,11 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ConnectionDB {
-  private static final String host = "ec2-54-247-78-30.eu-west-1.compute.amazonaws.com";
+  private static final String host = "ec2-54-197-48-79.compute-1.amazonaws.com";
   private static final int port = 5432;
-  private static final String dbname = "d3du1hdp316o87";
-  private static final String username = "eyscvazigqvthg";
-  private static final String password = "88a9e297385cc9f450652971aed96ba6972540ba9bf2f2b9dec40859564ae142";
+  private static final String dbname = "daal1n6dluih5b";
+  private static final String username = "aektxckrvsyfpl";
+  private static final String password = "dc9622d44c714737a69b25c17d2a7ee5f0e730823f6a824fcb1026ad582e2a2b";
   private static final String JDBC_DATABASE_URL =
           String.format("jdbc:postgresql://%s:%d/%s?user=%s&password=%s",
                   host, port, dbname, username, password);
