@@ -90,7 +90,8 @@ public class UserDAO implements DAO<User> {
   public List<User> getUsersToShow(int id) {
     List<User> users = new ArrayList<>();
     try {
-      String SQL = "SELECT * FROM users where id != ?";
+//      String SQL = "SELECT * FROM users where id != ?";
+      String SQL = "SELECT * FROM users u left join likes l on u.id == l.whom_id AND l.action == 'TRUE'";
       Connection conn = ConnectionDB.getConnection();
       PreparedStatement stmt = conn.prepareStatement(SQL);
       stmt.setInt(1, id);
