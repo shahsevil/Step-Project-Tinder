@@ -7,7 +7,6 @@ import org.entities.User;
 import org.filter.LikeFilter;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class LikePageService {
 

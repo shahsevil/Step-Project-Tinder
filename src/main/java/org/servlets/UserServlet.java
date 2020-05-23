@@ -25,7 +25,7 @@ public class UserServlet extends HttpServlet {
         int who_id = getIdFromCookie(req, "who_id");
 //        List<User> list = userService.listLikedUsers(who_id);
 
-        List<User> likedUsers = userService.getLikedUsers(who_id);
+        List<User> likedUsers = userService.getUsersToShow(who_id);
 
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("listOfLikedUsers", likedUsers);

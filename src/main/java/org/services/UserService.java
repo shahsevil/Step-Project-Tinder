@@ -26,4 +26,8 @@ public class UserService {
                 .map(id -> userDAO.get(id).orElseThrow(RuntimeException::new))
                 .collect(Collectors.toList());
     }
+
+    public List<User> getUsersToShow(int id) {
+        return userDAO.getUsersToList(id);
+    }
 }
