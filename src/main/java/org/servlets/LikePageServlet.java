@@ -33,7 +33,7 @@ public class LikePageServlet extends HttpServlet {
 
     allUsers = LIKE_PAGE_SERVICE.getUsersToShow(Integer.parseInt(cookie.getValue()));
 
-    if (allUsers.get(0) != null) {
+    if (allUsers.size() != 0) {
       User user0 = allUsers.get(0);
 
       HashMap<String, Object> data = new HashMap<>();
