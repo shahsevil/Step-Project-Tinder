@@ -12,9 +12,9 @@
         integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
   <!-- Bootstrap core CSS -->
   <!-- <link href="../css/bootstrap.min.css" rel="stylesheet"> -->
-  <link href="/content/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom styles for this template -->
-  <link rel="stylesheet" href="/content/css/style.css">
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
