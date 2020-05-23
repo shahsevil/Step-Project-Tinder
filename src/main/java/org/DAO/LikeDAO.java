@@ -151,21 +151,21 @@ public class LikeDAO implements DAO<Like> {
   }
 
   public Optional<Like> optionalLike(Like like) {
-    Like like1 = null;
-    String SQL = "SELECT * FROM likes";
+    String SQL = "SELECT * FROM likes WHERE who_id = ? AND whom_id = ?";
     try {
       Connection connection = ConnectionDB.getConnection();
       PreparedStatement stmt = connection.prepareStatement(SQL);
+      stmt.setInt(1, like.getLikerUserId());
+      stmt.setInt(2, like.getLikedUserId());
       ResultSet rset = stmt.executeQuery();
-      while (rset.next()) {
-        like1 = new Like(rset.getInt("who_id"), rset.getInt("whom_id"),
-                rset.getBoolean("action"));
+      if (rset.next()) {
+        return Optional.of(new Like(rset.getInt("who_id"), rset.getInt("whom_id"),
+                rset.getBoolean("action")));
       }
       connection.close();
     } catch (SQLException e) {
       throw new RuntimeException("Something went wrong");
     }
-    return Optional.ofNullable(like1);
-
+    return Optional.empty();
   }
 }
