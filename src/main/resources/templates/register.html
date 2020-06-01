@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+</head>
+<body>
+<h1 style="text-align:center">Registering page</h1>
+<table style="table-layout:auto" BORDER="5" WIDTH="50%" CELLPADDING="4" CELLSPACING="3" align="center"
+       style="margin:0 auto;">
+  <tr>
+    <th>
+      <form method="post">
+        <label for="username">Username:</label>
+        <input id="username" type="email"
+               placeholder="example@abc.com"
+               name="username" required><br>
+
+        <label for="password">Password:</label>
+        <input id="password" type="password"
+               placeholder="********" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+               title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+               required><br>
+
+        <label for="photoUrl">Photo url:</label>
+        <input id="photoUrl" type="url"
+               placeholder="https://www.google.com" name="photoUrl" required><br>
+
+        <label for="profession">Profession:</label>
+        <input id="profession" type="text" placeholder="Software developer"
+               name="profession" required><br>
+
+        <button name="register" type="submit">REGISTER</button>
+      </form>
+    </th>
+  </tr>
+</table>
+</body>
+</html>
