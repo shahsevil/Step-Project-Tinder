@@ -17,6 +17,8 @@ public class DAOMessage implements DAO<Message> {
   private final String SQL_insert = "INSERT INTO messages (from_id, to_id, content, date) VALUES (?, ?, ?, ?)";
   private final String SQL_delete = "DELETE FROM messages WHERE id = ?";
   private final String SQL_update = "UPDATE messages SET from_id = ?, to_id = ?, content = ?, date = ? WHERE id = ?";
+  private final String SQL_getOne = "SELECT * FROM messages where from_id = ? and to_id = ? OR from_id = ? and to_id = ? ORDER BY date";
+
   private final Connection CONN;
 
   public DAOMessage(Connection connection) {
@@ -93,11 +95,10 @@ public class DAOMessage implements DAO<Message> {
     stmt.executeUpdate();
   }
 
+  @SneakyThrows
   public List<Message> getMessages(int from, int to) {
-    String SQL = "SELECT * FROM messages where from_id = ? and to_id = ? OR from_id = ? and to_id = ? ORDER BY date";
     List<Message> messages = new ArrayList<>();
-    try {
-      PreparedStatement stmt = CONN.prepareStatement(SQL);
+      PreparedStatement stmt = CONN.prepareStatement(SQL_getOne);
       stmt.setInt(1, from);
       stmt.setInt(2, to);
       stmt.setInt(3, to);
@@ -109,10 +110,6 @@ public class DAOMessage implements DAO<Message> {
                 resultSet.getString("content"),
                 LocalDate.parse(String.valueOf(resultSet.getDate("date")))));
       }
-    } catch (SQLException e) {
-      throw new RuntimeException("Something went wrong");
-    }
     return messages;
   }
-
 }

@@ -1,5 +1,7 @@
 package org.tinder_proj.servlets;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.tinder_proj.dao.DAOLike;
 import org.tinder_proj.dao.DAOUser;
 import org.tinder_proj.entity.User;
@@ -25,6 +27,8 @@ public class LikePageServlet extends HttpServlet {
   private final LikePageService LIKE_PAGE_SERVICE;
   private final TemplateEngine TEMPLATE_ENGINE;
   private static List<User> userList;
+  private static final Logger log =
+          LogManager.getFormatterLogger(LikePageServlet.class);
 
   public LikePageServlet(DAOUser DAO_USER, DAOLike DAO_LIKE, TemplateEngine templateEngine) {
     LIKE_PAGE_SERVICE = new LikePageService(DAO_USER, DAO_LIKE);
@@ -55,8 +59,9 @@ public class LikePageServlet extends HttpServlet {
     } else {
       try (PrintWriter w = resp.getWriter()) {
         w.write("No any user found!");
+        log.info("No any user found!");
       } catch (IOException e) {
-        e.printStackTrace();
+        log.error("Exception caught!");
       }
     }
   }

@@ -1,5 +1,7 @@
 package org.tinder_proj.servlets;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.tinder_proj.dao.DAOLike;
 import org.tinder_proj.dao.DAOUser;
 import org.tinder_proj.entity.User;
@@ -23,6 +25,8 @@ import static org.tinder_proj.utils.GetReqData.getCookieValue;
 public class UserServlet extends HttpServlet {
   private final UsersService USERS_SERVICE;
   private final TemplateEngine TEMPLATE_ENGINE;
+  private static final Logger log =
+          LogManager.getFormatterLogger(UserServlet.class);
 
   public UserServlet(DAOUser DAO_USER, DAOLike DAO_LIKE, TemplateEngine templateEngine) {
     this.USERS_SERVICE = new UsersService(DAO_USER, DAO_LIKE);
@@ -43,6 +47,7 @@ public class UserServlet extends HttpServlet {
     } else {
       try (PrintWriter w = resp.getWriter()) {
         w.write("You have not liked anybody yet");
+        log.info("You have not liked anybody yet");
       }
     }
   }
@@ -54,6 +59,7 @@ public class UserServlet extends HttpServlet {
       int whom_id = strToInt(getCookieValue(whomCookie));
       resp.sendRedirect(String.format("/message/%d", whom_id));
     } catch (Exception e) {
+      log.error("Exception caught! Redirected to /users...");
       resp.sendRedirect("/users");
     }
   }
