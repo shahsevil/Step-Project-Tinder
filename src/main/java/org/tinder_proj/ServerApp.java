@@ -7,6 +7,7 @@ import org.tinder_proj.dao.DAOLike;
 import org.tinder_proj.dao.DAOMessage;
 import org.tinder_proj.dao.DAOUser;
 import org.tinder_proj.db.DbConn;
+import org.tinder_proj.db.DbSetup;
 import org.tinder_proj.servlets.*;
 import org.tinder_proj.utils.TemplateEngine;
 
@@ -33,6 +34,9 @@ public class ServerApp {
 //    Connection conn = DbConn.createFromURL(HerokuEnv.jdbc_url());
     Connection conn = DbConn.create(HerokuEnv.jdbc_url(), HerokuEnv.jdbc_username(), HerokuEnv.jdbc_password());
 //    Connection conn = null;
+
+
+    DbSetup.migrate(HerokuEnv.jdbc_url(),HerokuEnv.jdbc_username(),HerokuEnv.jdbc_password());
 
     final DAOUser DAO_USER = new DAOUser(conn);
     final DAOLike DAO_LIKE = new DAOLike(conn);
