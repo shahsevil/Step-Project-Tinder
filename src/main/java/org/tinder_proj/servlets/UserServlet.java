@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +40,7 @@ public class UserServlet extends HttpServlet {
     int who_id = strToInt(getCookieValue(whoCookie));
 
     List<User> likedUsers = USERS_SERVICE.getLikedUsers(who_id);
-    
+
     if (likedUsers.size() != 0) {
       HashMap<String, Object> hashMap = new HashMap<>();
       hashMap.put("listOfLikedUsers", likedUsers);
@@ -54,13 +55,29 @@ public class UserServlet extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-    try {
-      Optional<Cookie> whomCookie = getCookie(req, "whom_id");
-      int whom_id = strToInt(getCookieValue(whomCookie));
-      resp.sendRedirect(String.format("/message/%d", whom_id));
-    } catch (Exception e) {
-      log.error("Exception caught! Redirected to /users...");
-      resp.sendRedirect("/users");
+    String action = req.getParameter("action");
+
+    if ("sendMessage".equals(action)) {
+      try {
+        Optional<Cookie> whomCookie = getCookie(req, "whom_id");
+        int whom_id = strToInt(getCookieValue(whomCookie));
+        resp.sendRedirect(String.format("/message/%d", whom_id));
+      } catch (Exception e) {
+        log.error("Exception caught! Redirected to /users...");
+        resp.sendRedirect("/users");
+      }
+    } else {
+      Cookie[] cookies = req.getCookies();
+      Arrays.stream(cookies)
+              .forEach(c -> {
+                c.setMaxAge(0);
+                resp.addCookie(c);
+              });
+      try {
+        resp.sendRedirect("/*");
+      } catch (IOException e) {
+        log.error("Exception caught!!!");
+      }
     }
   }
 }

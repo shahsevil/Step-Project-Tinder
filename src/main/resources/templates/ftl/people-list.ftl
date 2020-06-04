@@ -49,16 +49,16 @@
                 <td class="align-middle">
                   <!--     Last Login: 6/10/2017<br><small class="text-muted">5 days ago</small> -->
                   <form method="post">
-                    <button type="submit">Send message</button>
+                    <button type="submit" name="action" value="sendMessage">Send message</button>
                   </form>
                 </td>
               </tr>
               </#list>
               </tbody>
             </table>
-            <a href="/logout">
-              <button type="button" style="width: 20%; height: 20%;">Logout</button>
-            </a>
+            <form method="post">
+              <button type="submit" name="action" value="logout" style="width: 20%; height: 20%;">Logout</button>
+            </form>
           </div>
         </div>
       </div>
