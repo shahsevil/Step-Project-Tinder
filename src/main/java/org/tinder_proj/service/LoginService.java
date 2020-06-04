@@ -13,11 +13,10 @@ public class LoginService {
     this.DAO_USER = DAO_USER;
   }
 
+
   public Optional<User> isRegisteredUser(String username, String password) {
-    return DAO_USER.getAll()
-            .stream()
-            .filter(user -> username.equals(user.getUsername()) && password.equals(user.getPassword()))
-            .findFirst();
+    String SQL = String.format("SELECT * FROM users u WHERE u.username == %s && u.password == %s", username, password);
+    return DAO_USER.getBy(SQL).stream().findFirst();
   }
 
   public void updateLastLoginDate(User user, LocalDate last_login) {

@@ -18,7 +18,6 @@ public class DAOUser implements DAO<User> {
   private final String SQL_getAll = "SELECT * FROM users";
   private final String SQL_get    = "SELECT * FROM users WHERE id = ?";
   private final String SQL_insert = "INSERT INTO users (username, password, photo_url, profession, last_login) VALUES (?,?,?,?,?)";
-  private final String SQL_delete = "DELETE FROM users WHERE id = ?";
   private final String SQL_update = "UPDATE users SET username = ?, password = ?, photo_url = ?, profession = ?, last_login = ? WHERE id = ?";
   private final Connection CONN;
 
@@ -45,9 +44,23 @@ public class DAOUser implements DAO<User> {
     return data;
   }
 
+  @SneakyThrows
   @Override
-  public List<User> getBy(Predicate<User> p) {
-    return getAll().stream().filter(p).collect(Collectors.toList());
+  public List<User> getBy(String SQL) {
+    PreparedStatement stmt = CONN.prepareStatement(SQL);
+    ResultSet resultSet = stmt.executeQuery();
+    List<User> data = new ArrayList<>();
+    while (resultSet.next()) {
+      int id = resultSet.getInt("id");
+      String username = resultSet.getString("username");
+      String password = resultSet.getString("password");
+      String photo_url = resultSet.getString("photo_url");
+      String profession = resultSet.getString("profession");
+      LocalDate last_login = LocalDate.parse(resultSet.getString("last_login"));
+      User user = new User(id, username, password, photo_url, profession, last_login);
+      data.add(user);
+    }
+    return data;
   }
 
   @SneakyThrows
@@ -77,14 +90,6 @@ public class DAOUser implements DAO<User> {
     stmt.setString(3, user.getPhoto_url());
     stmt.setString(4, user.getProfession());
     stmt.setDate(5, Date.valueOf(user.getLast_login()));
-    stmt.executeUpdate();
-  }
-
-  @SneakyThrows
-  @Override
-  public void delete(int id) {
-    PreparedStatement stmt = CONN.prepareStatement(SQL_delete);
-    stmt.setInt(1, id);
     stmt.executeUpdate();
   }
 

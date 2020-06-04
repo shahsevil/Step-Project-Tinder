@@ -20,15 +20,13 @@ public class LikePageService {
 
 
   public List<User> getUsersExceptThis(int id) {
-    return DAO_USER.getAll().stream().filter(user -> user.getId() != id).collect(Collectors.toList());
+    String SQL = String.format("SELECT * FROM users u WHERE u.id != %d", id);
+    return DAO_USER.getBy(SQL);
   }
 
   public void addReaction(int who_id, int whom_id, boolean reaction) {
-    Optional<Like> isReactedBefore = DAO_LIKE.getAll()
-            .stream()
-            .filter(like -> like.getWho_id() == who_id
-                    && like.getWhom_id() == whom_id)
-            .findFirst();
+    String SQL = String.format("SELECT * FROM likes l WHERE l.who_id == %d && l.whom_id == %d", who_id, whom_id);
+    Optional<Like> isReactedBefore = DAO_LIKE.getBy(SQL).stream().findFirst();
 
     if (isReactedBefore.isPresent()) {
       Like like = isReactedBefore.get();

@@ -36,7 +36,7 @@ public class ServerApp {
 //    Connection conn = null;
 
 
-    DbSetup.migrate(HerokuEnv.jdbc_url(),HerokuEnv.jdbc_username(),HerokuEnv.jdbc_password());
+    DbSetup.migrate(HerokuEnv.jdbc_url(), HerokuEnv.jdbc_username(), HerokuEnv.jdbc_password());
 
     final DAOUser DAO_USER = new DAOUser(conn);
     final DAOLike DAO_LIKE = new DAOLike(conn);
@@ -54,7 +54,6 @@ public class ServerApp {
     handler.addServlet(new ServletHolder(new LikePageServlet(DAO_USER, DAO_LIKE, TEMPLATE_ENGINE)), "/users");
     handler.addServlet(new ServletHolder(new UserServlet(DAO_USER, DAO_LIKE, TEMPLATE_ENGINE)), "/likes");
     handler.addServlet(new ServletHolder(new MessageServlet(DAO_USER, DAO_MESSAGE, TEMPLATE_ENGINE)), "/message/*");
-
 
     server.setHandler(handler);
     server.start();

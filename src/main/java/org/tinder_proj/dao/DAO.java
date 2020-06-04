@@ -6,9 +6,8 @@ import java.util.function.Predicate;
 
 public interface DAO<A> {
   List<A> getAll();
-  List<A> getBy(Predicate<A> p);
+  List<A> getBy(String SQL);
   Optional<A> get(int id);
   void insert(A a);
-  void delete(int id);
   void update(A a);
 }

@@ -11,7 +11,8 @@ public class RegisterService {
   }
 
   public boolean isRegistrable(String username) {
-    return DAO_USER.getBy(user -> user.getUsername().equals(username)).size() == 0;
+    String SQL = String.format("SELECT * FROM users u WHERE u.username == %s", username);
+    return DAO_USER.getBy(SQL).size() == 0;
   }
 
   public void register(User user) {

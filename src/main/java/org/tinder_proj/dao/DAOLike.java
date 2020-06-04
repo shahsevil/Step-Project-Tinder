@@ -14,9 +14,8 @@ import java.util.stream.Collectors;
 
 public class DAOLike implements DAO<Like> {
   private final String SQL_getAll = "SELECT * FROM likes";
-  private final String SQL_getBy = "SELECT * FROM likes WHERE id = ?";
+  private final String SQL_getBy  = "SELECT * FROM likes WHERE id = ?";
   private final String SQL_insert = "INSERT INTO likes (who_id, whom_id, action) VALUES (?, ? , ?)";
-  private final String SQL_delete = "DELETE FROM likes WHERE id = ?";
   private final String SQL_update = "UPDATE likes SET who_id = ?, whom_id = ?, action = ? WHERE id = ?";
   private final Connection CONN;
 
@@ -24,8 +23,8 @@ public class DAOLike implements DAO<Like> {
     this.CONN = connection;
   }
 
-  @SneakyThrows
   @Override
+  @SneakyThrows
   public List<Like> getAll() {
     PreparedStatement stmt = CONN.prepareStatement(SQL_getAll);
     ResultSet resultSet = stmt.executeQuery();
@@ -40,10 +39,20 @@ public class DAOLike implements DAO<Like> {
     return data;
   }
 
-  @SneakyThrows
   @Override
-  public List<Like> getBy(Predicate<Like> p) {
-    return getAll().stream().filter(p).collect(Collectors.toList());
+  @SneakyThrows
+  public List<Like> getBy(String SQL) {
+    PreparedStatement stmt = CONN.prepareStatement(SQL);
+    ResultSet resultSet = stmt.executeQuery();
+    List<Like> data = new ArrayList<>();
+    while (resultSet.next()) {
+      int id = resultSet.getInt("id");
+      int who_id = resultSet.getInt("who_id");
+      int whom_id = resultSet.getInt("whom_id");
+      boolean action = resultSet.getBoolean("action");
+      data.add(new Like(id, who_id, whom_id, action));
+    }
+    return data;
   }
 
   @SneakyThrows
@@ -69,14 +78,6 @@ public class DAOLike implements DAO<Like> {
     stmt.setInt(1, like.getWho_id());
     stmt.setInt(2, like.getWhom_id());
     stmt.setBoolean(3, like.isReaction());
-    stmt.executeUpdate();
-  }
-
-  @SneakyThrows
-  @Override
-  public void delete(int id) {
-    PreparedStatement stmt = CONN.prepareStatement(SQL_delete);
-    stmt.setInt(1, id);
     stmt.executeUpdate();
   }
 
