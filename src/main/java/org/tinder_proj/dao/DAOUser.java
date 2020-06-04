@@ -57,8 +57,7 @@ public class DAOUser implements DAO<User> {
       String photo_url = resultSet.getString("photo_url");
       String profession = resultSet.getString("profession");
       LocalDate last_login = LocalDate.parse(resultSet.getString("last_login"));
-      User user = new User(id, username, password, photo_url, profession, last_login);
-      data.add(user);
+      data.add(new User(id, username, password, photo_url, profession, last_login));
     }
     return data;
   }
