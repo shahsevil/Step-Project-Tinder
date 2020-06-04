@@ -19,7 +19,7 @@ public class UsersService {
   }
 
   public List<User> getLikedUsers(int who_id) {
-    String SQL = String.format("SELECT * FROM likes WHERE who_id = %d AND reaction = 'TRUE'", who_id);
+    String SQL = String.format("SELECT * FROM likes WHERE who_id = %d AND action = 'TRUE'", who_id);
 
     return DAO_LIKE.getBy(SQL).stream()
             .map(Like::getWhom_id)
