@@ -23,7 +23,7 @@ public class MessageService {
   }
 
   public List<Message> getMessages(int who_id, int whom_id) {
-    String SQL = String.format("SELECT * FROM messages WHERE from_id = %d and to_id = %d OR from_id = %d and to_id = %d ORDER BY date",
+    String SQL = String.format("SELECT * FROM messages WHERE from_id = %d AND to_id = %d OR from_id = %d AND to_id = %d ORDER BY date",
             who_id, whom_id, whom_id, who_id);
     return DAO_MESSAGE.getBy(SQL);
   }

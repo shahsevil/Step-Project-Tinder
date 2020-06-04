@@ -20,12 +20,12 @@ public class LikePageService {
 
 
   public List<User> getUsersExceptThis(int id) {
-    String SQL = String.format("SELECT * FROM users u WHERE u.id != %d", id);
+    String SQL = String.format("SELECT * FROM users WHERE id != %d", id);
     return DAO_USER.getBy(SQL);
   }
 
   public void addReaction(int who_id, int whom_id, boolean reaction) {
-    String SQL = String.format("SELECT * FROM likes l WHERE l.who_id == %d && l.whom_id == %d", who_id, whom_id);
+    String SQL = String.format("SELECT * FROM likes WHERE who_id == %d AND whom_id = %d", who_id, whom_id);
     Optional<Like> isReactedBefore = DAO_LIKE.getBy(SQL).stream().findFirst();
 
     if (isReactedBefore.isPresent()) {
