@@ -8,10 +8,13 @@ import org.tinder_proj.dao.DAOMessage;
 import org.tinder_proj.dao.DAOUser;
 import org.tinder_proj.db.DbConn;
 import org.tinder_proj.db.DbSetup;
+import org.tinder_proj.filter.CookieFilter;
 import org.tinder_proj.servlets.*;
 import org.tinder_proj.utils.TemplateEngine;
 
+import javax.servlet.DispatcherType;
 import java.sql.Connection;
+import java.util.EnumSet;
 
 import static org.tinder_proj.utils.Dirs.FREEMARKER_DIR;
 
@@ -54,6 +57,10 @@ public class ServerApp {
     handler.addServlet(new ServletHolder(new LikePageServlet(DAO_USER, DAO_LIKE, TEMPLATE_ENGINE)), "/users");
     handler.addServlet(new ServletHolder(new UserServlet(DAO_USER, DAO_LIKE, TEMPLATE_ENGINE)), "/likes");
     handler.addServlet(new ServletHolder(new MessageServlet(DAO_USER, DAO_MESSAGE, TEMPLATE_ENGINE)), "/message/*");
+
+    handler.addFilter(CookieFilter.class, "/likes", EnumSet.of(DispatcherType.REQUEST));
+    handler.addFilter(CookieFilter.class, "/users", EnumSet.of(DispatcherType.REQUEST));
+    handler.addFilter(CookieFilter.class, "/message/*", EnumSet.of(DispatcherType.REQUEST));
 
     server.setHandler(handler);
     server.start();

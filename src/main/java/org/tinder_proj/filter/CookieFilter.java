@@ -14,7 +14,10 @@ public class CookieFilter implements Filter {
   public boolean isCookieOk(HttpServletRequest req) {
     Cookie[] cookies = req.getCookies();
     if (cookies == null) return false;
-    throw new IllegalArgumentException("Add if statement here...");
+    for (Cookie c : cookies) {
+      if ("who_id".equals(c.getName()) && c.getValue() != null) return true;
+    }
+    return false;
   }
 
   @Override
