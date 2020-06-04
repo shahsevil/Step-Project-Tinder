@@ -3,6 +3,7 @@ package org.tinder_proj.servlets;
 import org.tinder_proj.dao.DAOUser;
 import org.tinder_proj.entity.User;
 import org.tinder_proj.service.LoginService;
+import org.tinder_proj.utils.EncoderDecoder;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -20,6 +21,7 @@ import static org.tinder_proj.utils.Dirs.TEMPLATE_DIR;
 
 public class LoginServlet extends HttpServlet {
   private final LoginService LOGIN_SERVICE;
+  private final EncoderDecoder ed = new EncoderDecoder();
 
   public LoginServlet(DAOUser DAO_USER) {
     this.LOGIN_SERVICE = new LoginService(DAO_USER);
@@ -42,7 +44,7 @@ public class LoginServlet extends HttpServlet {
     if (isRegisteredUser.isPresent()) {
       User user = isRegisteredUser.get();
       LOGIN_SERVICE.updateLastLoginDate(user, LocalDate.now());
-      resp.addCookie(new Cookie("who_id", intToStr(user.getId())));
+      resp.addCookie(new Cookie("who_id", ed.encrypt(intToStr(user.getId()))));
       resp.sendRedirect("/users");
     } else {
       resp.sendRedirect("/login");

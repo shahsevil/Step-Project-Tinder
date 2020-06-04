@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public class GetReqData {
   private static final Logger log = LogManager.getFormatterLogger(GetReqData.class);
+  private static final EncoderDecoder ed = new EncoderDecoder();
 
   public static Optional<Cookie> getCookie(HttpServletRequest req, String cookieName) {
     return Arrays.stream(req.getCookies())
@@ -18,10 +19,10 @@ public class GetReqData {
   }
 
   public static String getCookieValue(Optional<Cookie> cookie) {
-    if (cookie.isPresent()) return cookie.get().getValue();
+    if (cookie.isPresent()) return ed.decrypt(cookie.get().getValue());
     else {
-        log.error("Cookie is empty!!!");
-        return null;
+      log.error("Cookie is empty!!!");
+      return null;
     }
   }
 }

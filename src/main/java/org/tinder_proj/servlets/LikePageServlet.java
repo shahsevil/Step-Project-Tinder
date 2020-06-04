@@ -6,6 +6,7 @@ import org.tinder_proj.dao.DAOLike;
 import org.tinder_proj.dao.DAOUser;
 import org.tinder_proj.entity.User;
 import org.tinder_proj.service.LikePageService;
+import org.tinder_proj.utils.EncoderDecoder;
 import org.tinder_proj.utils.TemplateEngine;
 
 import javax.servlet.http.Cookie;
@@ -29,6 +30,7 @@ public class LikePageServlet extends HttpServlet {
   private static List<User> userList;
   private static final Logger log =
           LogManager.getFormatterLogger(LikePageServlet.class);
+  private final EncoderDecoder ed = new EncoderDecoder();
 
   public LikePageServlet(DAOUser DAO_USER, DAOLike DAO_LIKE, TemplateEngine templateEngine) {
     LIKE_PAGE_SERVICE = new LikePageService(DAO_USER, DAO_LIKE);
@@ -50,8 +52,8 @@ public class LikePageServlet extends HttpServlet {
       data.put("username", user.getUsername());
       data.put("photoUrl", user.getPhoto_url());
 
-      Cookie whom = new Cookie("whom_id", intToStr(user.getId()));
-      Cookie index = new Cookie("index", "0");
+      Cookie whom = new Cookie("whom_id", ed.encrypt(intToStr(user.getId())));
+      Cookie index = new Cookie("index", ed.encrypt("0"));
 
       resp.addCookie(whom);
       resp.addCookie(index);
@@ -88,8 +90,8 @@ public class LikePageServlet extends HttpServlet {
       data.put("username", nextUser.getUsername());
       data.put("photoUrl", nextUser.getPhoto_url());
 
-      whomCookie.get().setValue(intToStr(nextUser.getId()));
-      idxCookie.get().setValue(intToStr(index));
+      whomCookie.get().setValue(ed.encrypt(intToStr(nextUser.getId())));
+      idxCookie.get().setValue(ed.encrypt(intToStr(index)));
 
       resp.addCookie(whomCookie.get());
       resp.addCookie(idxCookie.get());
