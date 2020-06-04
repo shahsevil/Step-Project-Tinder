@@ -15,7 +15,7 @@ public class LoginService {
 
 
   public Optional<User> isRegisteredUser(String username, String password) {
-    String SQL = String.format("SELECT * FROM users u WHERE u.username == %s && u.password == %s", username, password);
+    String SQL = String.format("SELECT * FROM users u WHERE u.username = %s && u.password = %s", username, password);
     return DAO_USER.getBy(SQL).stream().findFirst();
   }
 
