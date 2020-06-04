@@ -25,7 +25,7 @@ public class LikePageService {
   }
 
   public void addReaction(int who_id, int whom_id, boolean reaction) {
-    String SQL = String.format("SELECT * FROM likes WHERE who_id == %d AND whom_id = %d", who_id, whom_id);
+    String SQL = String.format("SELECT * FROM likes WHERE who_id = %d AND whom_id = %d", who_id, whom_id);
     Optional<Like> isReactedBefore = DAO_LIKE.getBy(SQL).stream().findFirst();
 
     if (isReactedBefore.isPresent()) {
