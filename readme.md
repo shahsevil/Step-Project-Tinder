@@ -14,6 +14,9 @@ Heroku env variables should be entered from Environment variables:
 
 ## Link to deployed version:
    - [TinderApp](https://step-tinder-app.herokuapp.com/)
+   
+## Link to source codes (GitHub):
+   - [step-project-tinder](https://github.com/shahsevil/step-project-tinder.git)
 
 ## Test user's credentials:
    - Username: test@example.com
