@@ -1,7 +1,6 @@
 package org.tinder_proj.servlets;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.tinder_proj.dao.DAOLike;
 import org.tinder_proj.dao.DAOUser;
 import org.tinder_proj.entity.User;
@@ -24,12 +23,11 @@ import static org.tinder_proj.utils.Converters.strToInt;
 import static org.tinder_proj.utils.GetReqData.getCookie;
 import static org.tinder_proj.utils.GetReqData.getCookieValue;
 
+@Log4j2
 public class LikePageServlet extends HttpServlet {
     private final LikePageService LIKE_PAGE_SERVICE;
     private final TemplateEngine TEMPLATE_ENGINE;
     private static List<User> userList;
-    private static final Logger log =
-            LogManager.getFormatterLogger(LikePageServlet.class);
     private final EncoderDecoder ed = new EncoderDecoder();
 
     public LikePageServlet(DAOUser DAO_USER, DAOLike DAO_LIKE, TemplateEngine templateEngine) {

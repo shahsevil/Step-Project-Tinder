@@ -1,5 +1,7 @@
 package org.tinder_proj.utils;
 
+import lombok.extern.log4j.Log4j2;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -13,6 +15,7 @@ import java.util.Base64;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
+@Log4j2
 public final class EncoderDecoder {
     private final static String CIPHER = "AES/CBC/PKCS5PADDING";
     private final Base64.Encoder encoder;
@@ -46,6 +49,7 @@ public final class EncoderDecoder {
         try {
             result = new String(decoder.decode(coded));
         } catch (IllegalArgumentException e) {
+            log.error("Could not be able to decode encoded value...");
             result = "";
         }
         return result;
@@ -56,6 +60,7 @@ public final class EncoderDecoder {
         try {
             result = decoder.decode(coded);
         } catch (IllegalArgumentException e) {
+            log.error("Could not be able to decode encoded value...");
             result = new byte[]{};
         }
         return result;
@@ -70,6 +75,7 @@ public final class EncoderDecoder {
                 return code64(cipher.doFinal(code64(value).getBytes()));
             }
         } catch (InvalidKeyException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException ex) {
+            log.error("EncodeDecode: can't encode...");
             throw new IllegalArgumentException("EncodeDecode: can't encode", ex);
         }
     }
@@ -83,6 +89,7 @@ public final class EncoderDecoder {
                 return decode64(new String(cipher.doFinal(decode64toBytes(encrypted))));
             }
         } catch (InvalidKeyException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException ex) {
+            log.error("EncodeDecode: can't encode...");
             throw new IllegalArgumentException("EncodeDecode: can't decode", ex);
         }
     }

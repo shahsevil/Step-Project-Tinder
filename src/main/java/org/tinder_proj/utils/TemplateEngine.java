@@ -3,8 +3,7 @@ package org.tinder_proj.utils;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -13,10 +12,10 @@ import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
+@Log4j2
 public class TemplateEngine {
 
     private Configuration conf;
-    private static final Logger log = LogManager.getFormatterLogger(TemplateEngine.class);
 
     public TemplateEngine(String fullPath) throws IOException {
         this.conf = new Configuration(Configuration.VERSION_2_3_28) {{

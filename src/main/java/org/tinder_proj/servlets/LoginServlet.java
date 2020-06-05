@@ -1,5 +1,6 @@
 package org.tinder_proj.servlets;
 
+import lombok.extern.log4j.Log4j2;
 import org.tinder_proj.dao.DAOUser;
 import org.tinder_proj.entity.User;
 import org.tinder_proj.service.LoginService;
@@ -19,6 +20,7 @@ import java.util.Optional;
 import static org.tinder_proj.utils.Converters.intToStr;
 import static org.tinder_proj.utils.Dirs.TEMPLATE_DIR;
 
+@Log4j2
 public class LoginServlet extends HttpServlet {
     private final LoginService LOGIN_SERVICE;
     private final EncoderDecoder ed = new EncoderDecoder();
@@ -47,6 +49,7 @@ public class LoginServlet extends HttpServlet {
             resp.addCookie(new Cookie("who_id", ed.encrypt(intToStr(user.getId()))));
             resp.sendRedirect("/users");
         } else {
+            log.error("Something went wrong while login operation");
             resp.sendRedirect("/login");
         }
     }

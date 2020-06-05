@@ -1,7 +1,6 @@
 package org.tinder_proj.servlets;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.tinder_proj.dao.DAOLike;
 import org.tinder_proj.dao.DAOUser;
 import org.tinder_proj.entity.User;
@@ -23,11 +22,10 @@ import static org.tinder_proj.utils.Converters.strToInt;
 import static org.tinder_proj.utils.GetReqData.getCookie;
 import static org.tinder_proj.utils.GetReqData.getCookieValue;
 
+@Log4j2
 public class UserServlet extends HttpServlet {
     private final UsersService USERS_SERVICE;
     private final TemplateEngine TEMPLATE_ENGINE;
-    private static final Logger log =
-            LogManager.getFormatterLogger(UserServlet.class);
 
     public UserServlet(DAOUser DAO_USER, DAOLike DAO_LIKE, TemplateEngine templateEngine) {
         this.USERS_SERVICE = new UsersService(DAO_USER, DAO_LIKE);

@@ -1,5 +1,6 @@
 package org.tinder_proj.servlets;
 
+import lombok.extern.log4j.Log4j2;
 import org.tinder_proj.dao.DAOUser;
 import org.tinder_proj.entity.User;
 import org.tinder_proj.service.RegisterService;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 
 import static org.tinder_proj.utils.Dirs.TEMPLATE_DIR;
 
+@Log4j2
 public class RegisterServlet extends HttpServlet {
     private final RegisterService REGISTER_SERVICE;
 
@@ -39,6 +41,9 @@ public class RegisterServlet extends HttpServlet {
         if (REGISTER_SERVICE.isRegistrable(username)) {
             REGISTER_SERVICE.register(new User(username, password, profession, photoUrl, LocalDate.now()));
             resp.sendRedirect("/login");
-        } else resp.sendRedirect("/register");
+        } else{
+            log.error("registration failed...");
+            resp.sendRedirect("/register");
+        }
     }
 }

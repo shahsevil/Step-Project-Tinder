@@ -1,7 +1,6 @@
 package org.tinder_proj.service;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.tinder_proj.dao.DAOMessage;
 import org.tinder_proj.dao.DAOUser;
 import org.tinder_proj.entity.Message;
@@ -11,11 +10,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+@Log4j2
 public class MessageService {
     private final DAOUser DAO_USER;
     private final DAOMessage DAO_MESSAGE;
-    private static final Logger log =
-            LogManager.getFormatterLogger(MessageService.class);
 
     public MessageService(DAOUser DAO_USER, DAOMessage DAO_MESSAGE) {
         this.DAO_USER = DAO_USER;
@@ -27,6 +25,7 @@ public class MessageService {
                 who_id, whom_id, whom_id, who_id);
         return DAO_MESSAGE.getBy(SQL);
     }
+
 
     public User getUserInfo(int id) {
         Optional<User> user = DAO_USER.get(id);
