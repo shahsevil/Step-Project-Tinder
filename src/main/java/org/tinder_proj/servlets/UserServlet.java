@@ -24,60 +24,60 @@ import static org.tinder_proj.utils.GetReqData.getCookie;
 import static org.tinder_proj.utils.GetReqData.getCookieValue;
 
 public class UserServlet extends HttpServlet {
-  private final UsersService USERS_SERVICE;
-  private final TemplateEngine TEMPLATE_ENGINE;
-  private static final Logger log =
-          LogManager.getFormatterLogger(UserServlet.class);
+    private final UsersService USERS_SERVICE;
+    private final TemplateEngine TEMPLATE_ENGINE;
+    private static final Logger log =
+            LogManager.getFormatterLogger(UserServlet.class);
 
-  public UserServlet(DAOUser DAO_USER, DAOLike DAO_LIKE, TemplateEngine templateEngine) {
-    this.USERS_SERVICE = new UsersService(DAO_USER, DAO_LIKE);
-    this.TEMPLATE_ENGINE = templateEngine;
-  }
-
-  @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-    Optional<Cookie> whoCookie = getCookie(req, "who_id");
-    int who_id = strToInt(getCookieValue(whoCookie));
-
-    List<User> likedUsers = USERS_SERVICE.getLikedUsers(who_id);
-
-    if (likedUsers.size() != 0) {
-      HashMap<String, Object> hashMap = new HashMap<>();
-      hashMap.put("listOfLikedUsers", likedUsers);
-      TEMPLATE_ENGINE.render("people-list.ftl", hashMap, resp);
-    } else {
-      try (PrintWriter w = resp.getWriter()) {
-        w.write("You have not liked anybody yet");
-        log.info("You have not liked anybody yet");
-      }
+    public UserServlet(DAOUser DAO_USER, DAOLike DAO_LIKE, TemplateEngine templateEngine) {
+        this.USERS_SERVICE = new UsersService(DAO_USER, DAO_LIKE);
+        this.TEMPLATE_ENGINE = templateEngine;
     }
-  }
 
-  @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-    String action = req.getParameter("action");
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Optional<Cookie> whoCookie = getCookie(req, "who_id");
+        int who_id = strToInt(getCookieValue(whoCookie));
 
-    if ("sendMessage".equals(action)) {
-      try {
-        Optional<Cookie> whomCookie = getCookie(req, "whom_id");
-        int whom_id = strToInt(getCookieValue(whomCookie));
-        resp.sendRedirect(String.format("/message/%d", whom_id));
-      } catch (Exception e) {
-        log.error("Exception caught! Redirected to /users...");
-        resp.sendRedirect("/users");
-      }
-    } else {
-      Cookie[] cookies = req.getCookies();
-      Arrays.stream(cookies)
-              .forEach(c -> {
-                c.setMaxAge(0);
-                resp.addCookie(c);
-              });
-      try {
-        resp.sendRedirect("/*");
-      } catch (IOException e) {
-        log.error("Exception caught!!!");
-      }
+        List<User> likedUsers = USERS_SERVICE.getLikedUsers(who_id);
+
+        if (likedUsers.size() != 0) {
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("listOfLikedUsers", likedUsers);
+            TEMPLATE_ENGINE.render("people-list.ftl", hashMap, resp);
+        } else {
+            try (PrintWriter w = resp.getWriter()) {
+                w.write("You have not liked anybody yet");
+                log.info("You have not liked anybody yet");
+            }
+        }
     }
-  }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String action = req.getParameter("action");
+
+        if ("sendMessage".equals(action)) {
+            try {
+                Optional<Cookie> whomCookie = getCookie(req, "whom_id");
+                int whom_id = strToInt(getCookieValue(whomCookie));
+                resp.sendRedirect(String.format("/message/%d", whom_id));
+            } catch (Exception e) {
+                log.error("Exception caught! Redirected to /users...");
+                resp.sendRedirect("/users");
+            }
+        } else {
+            Cookie[] cookies = req.getCookies();
+            Arrays.stream(cookies)
+                    .forEach(c -> {
+                        c.setMaxAge(0);
+                        resp.addCookie(c);
+                    });
+            try {
+                resp.sendRedirect("/*");
+            } catch (IOException e) {
+                log.error("Exception caught!!!");
+            }
+        }
+    }
 }

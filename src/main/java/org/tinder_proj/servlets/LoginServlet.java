@@ -20,34 +20,34 @@ import static org.tinder_proj.utils.Converters.intToStr;
 import static org.tinder_proj.utils.Dirs.TEMPLATE_DIR;
 
 public class LoginServlet extends HttpServlet {
-  private final LoginService LOGIN_SERVICE;
-  private final EncoderDecoder ed = new EncoderDecoder();
+    private final LoginService LOGIN_SERVICE;
+    private final EncoderDecoder ed = new EncoderDecoder();
 
-  public LoginServlet(DAOUser DAO_USER) {
-    this.LOGIN_SERVICE = new LoginService(DAO_USER);
-  }
-
-  @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-    try (OutputStream os = resp.getOutputStream()) {
-      Files.copy(Paths.get(TEMPLATE_DIR, "login.html"), os);
+    public LoginServlet(DAOUser DAO_USER) {
+        this.LOGIN_SERVICE = new LoginService(DAO_USER);
     }
-  }
 
-  @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-    String username = req.getParameter("username");
-    String password = req.getParameter("password");
-
-    Optional<User> isRegisteredUser = LOGIN_SERVICE.isRegisteredUser(username, password);
-
-    if (isRegisteredUser.isPresent()) {
-      User user = isRegisteredUser.get();
-      LOGIN_SERVICE.updateLastLoginDate(user, LocalDate.now());
-      resp.addCookie(new Cookie("who_id", ed.encrypt(intToStr(user.getId()))));
-      resp.sendRedirect("/users");
-    } else {
-      resp.sendRedirect("/login");
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        try (OutputStream os = resp.getOutputStream()) {
+            Files.copy(Paths.get(TEMPLATE_DIR, "login.html"), os);
+        }
     }
-  }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+
+        Optional<User> isRegisteredUser = LOGIN_SERVICE.isRegisteredUser(username, password);
+
+        if (isRegisteredUser.isPresent()) {
+            User user = isRegisteredUser.get();
+            LOGIN_SERVICE.updateLastLoginDate(user, LocalDate.now());
+            resp.addCookie(new Cookie("who_id", ed.encrypt(intToStr(user.getId()))));
+            resp.sendRedirect("/users");
+        } else {
+            resp.sendRedirect("/login");
+        }
+    }
 }

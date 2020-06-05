@@ -16,29 +16,29 @@ import java.time.LocalDate;
 import static org.tinder_proj.utils.Dirs.TEMPLATE_DIR;
 
 public class RegisterServlet extends HttpServlet {
-  private final RegisterService REGISTER_SERVICE;
+    private final RegisterService REGISTER_SERVICE;
 
-  public RegisterServlet(DAOUser DAO_USER) {
-    this.REGISTER_SERVICE = new RegisterService(DAO_USER);
-  }
-
-  @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-    try (OutputStream os = resp.getOutputStream()) {
-      Files.copy(Paths.get(TEMPLATE_DIR, "register.html"), os);
+    public RegisterServlet(DAOUser DAO_USER) {
+        this.REGISTER_SERVICE = new RegisterService(DAO_USER);
     }
-  }
 
-  @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-    String username = req.getParameter("username");
-    String password = req.getParameter("password");
-    String profession = req.getParameter("profession");
-    String photoUrl = req.getParameter("photoUrl");
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        try (OutputStream os = resp.getOutputStream()) {
+            Files.copy(Paths.get(TEMPLATE_DIR, "register.html"), os);
+        }
+    }
 
-    if (REGISTER_SERVICE.isRegistrable(username)) {
-      REGISTER_SERVICE.register(new User(username, password, profession, photoUrl, LocalDate.now()));
-      resp.sendRedirect("/login");
-    } else resp.sendRedirect("/register");
-  }
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+        String profession = req.getParameter("profession");
+        String photoUrl = req.getParameter("photoUrl");
+
+        if (REGISTER_SERVICE.isRegistrable(username)) {
+            REGISTER_SERVICE.register(new User(username, password, profession, photoUrl, LocalDate.now()));
+            resp.sendRedirect("/login");
+        } else resp.sendRedirect("/register");
+    }
 }
