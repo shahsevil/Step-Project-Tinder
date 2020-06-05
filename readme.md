@@ -12,9 +12,9 @@ Heroku env variables should be entered from Environment variables:
 - `JDBC_DATABASE_USERNAME`
 - `JDBC_DATABASE_PASSWORD`
 
-##Link to deployed version:
+## Link to deployed version:
 [TinderApp](https://step-tinder-app.herokuapp.com/)
 
-##Test user's credentials:
+## Test user's credentials:
    Username: test@example.com
    Password: Tester123
